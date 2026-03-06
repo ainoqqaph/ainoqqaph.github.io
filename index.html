@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人簡歷 | 數據分析與資料庫工程師</title>
+    <title>劉翔維 Elias Liou | 數據分析與資料庫工程師</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff;
-            --card-bg: #161b22;
-            --border-color: #30363d;
+            /* 淺色主題配色 */
+            --bg-color: #f4f6f8;
+            --text-color: #333333;
+            --text-light: #555555;
+            --accent-color: #0056b3; /* 專業沉穩的藍色 */
+            --card-bg: #ffffff;
+            --border-color: #e1e4e8;
+            --tag-bg: #e6f0fa;
+            --tag-border: #b3d4f5;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -23,21 +27,30 @@
         header {
             text-align: center;
             padding: 4rem 1rem;
+            background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
         }
-        h1 { color: #ffffff; margin-bottom: 0.5rem; }
-        h2 { color: var(--accent-color); font-weight: 400; margin-top: 0; }
+        h1 { color: #1a1a1a; margin-bottom: 0.5rem; font-size: 2.5rem; }
+        h2 { color: var(--accent-color); font-weight: 500; margin-top: 0; }
+        .contact-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            font-weight: 500;
+        }
+        .contact-info a:hover { text-decoration: underline; }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
         section { margin-bottom: 3rem; }
         .section-title {
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
-            color: #ffffff;
+            color: #1a1a1a;
+            font-size: 1.5rem;
         }
         .grid {
             display: grid;
@@ -50,48 +63,53 @@
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .card h3 { margin-top: 0; color: var(--accent-color); }
-        ul { padding-left: 1.2rem; }
+        .card h3 { margin-top: 0; color: var(--accent-color); font-size: 1.2rem; }
+        .card .date { color: #888; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
+        ul { padding-left: 1.2rem; color: var(--text-light); }
         li { margin-bottom: 0.5rem; }
         .tag {
             display: inline-block;
-            background-color: rgba(88, 166, 255, 0.1);
+            background-color: var(--tag-bg);
             color: var(--accent-color);
-            border: 1px solid rgba(88, 166, 255, 0.4);
-            padding: 0.2rem 0.6rem;
+            border: 1px solid var(--tag-border);
+            padding: 0.3rem 0.8rem;
             border-radius: 2em;
             font-size: 0.85rem;
-            margin: 0.2rem;
+            margin: 0.3rem 0.3rem 0 0;
+            font-weight: 500;
         }
-        a { color: var(--accent-color); text-decoration: none; }
-        a:hover { text-decoration: underline; }
         footer {
             text-align: center;
             padding: 2rem;
+            background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
             font-size: 0.9rem;
+            color: var(--text-light);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>[你的名字]</h1>
-        <h2>Data Engineer / BI Professional</h2>
-        <p>
-            <a href="mailto:your.email@example.com">Email</a> | 
-            <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a> | 
-            <a href="https://github.com/yourusername" target="_blank">GitHub</a>
-        </p>
+        <h1>劉翔維 (Elias Liou)</h1>
+        <h2>Data Engineer / Data Analyst</h2>
+        <div class="contact-info">
+            <a href="mailto:noqqaph@gmail.com">noqqaph@gmail.com</a> | 
+            <span>0933-849-436</span> | 
+            <a href="https://github.com/yourusername" target="_blank">GitHub</a> |
+            <span>台中市</span>
+        </div>
     </header>
 
     <div class="container">
         <section>
             <h2 class="section-title">關於我 (About Me)</h2>
-            <p>專注於企業級資料庫架構設計、進階 T-SQL 開發與商業數據視覺化的工程師。具備紮實的 SQL Server 管理經驗，涵蓋災難復原 (DR)、精細權限控管 (Security) 與程式化物件開發。不僅能確保資料底層的高可用性與安全性，亦能透過 SSAS 與 Power BI 將複雜數據轉化為具商業價值的洞察。</p>
+            <p>專注於企業級資料庫架構設計、進階 T-SQL 開發與商業數據視覺化的資料工程師。具備紮實的 SQL Server 管理經驗，涵蓋災難復原 (DR)、精細權限控管 (Security) 與程式化物件開發。</p>
+            <p>擁有 5 年志願役軍官部隊領導歷練與 5 年澳洲跨國工作經驗，培養了極強的抗壓韌性、高壓下縝密的邏輯思維以及優異的獨立作業與團隊協作能力。善於將過去在行政管理與跨部門協調的經驗，轉化為釐清商業需求與數據治理的養分，致力於打造穩健的數據底層架構並提供具價值的商業洞察。</p>
         </section>
 
         <section>
@@ -100,53 +118,80 @@
                 <div class="card">
                     <h3>🏢 Database Architecture & Security</h3>
                     <ul>
-                        <li><strong>災難復原 (DR):</strong> Point-in-Time Recovery, NO_TRUNCATE, TDE 憑證加密備份</li>
-                        <li><strong>資安控管:</strong> DCL (GRANT/DENY/REVOKE), RLS (Row-Level Security)</li>
-                        <li><strong>程式化與稽核:</strong> SP (OUTPUT/RECOMPILE), UDF, DML Triggers (inserted/deleted) 實作稽核</li>
+                        <li><strong>災難復原 (DR):</strong> 實作 Point-in-Time Recovery, 結尾交易記錄備份 (NO_TRUNCATE), TDE 憑證加密備份。</li>
+                        <li><strong>資安控管:</strong> 熟稔 DCL (GRANT/DENY/REVOKE) 與 RLS (資料列層級安全性)。</li>
+                        <li><strong>程式化與稽核:</strong> 撰寫帶有 OUTPUT/RECOMPILE 的 SP、UDF；運用 DML Triggers 搭配 inserted/deleted 建立稽核機制。</li>
                     </ul>
                 </div>
                 <div class="card">
-                    <h3>⚙️ Advanced T-SQL & BI</h3>
+                    <h3>⚙️ Advanced T-SQL & BI Data Modeling</h3>
                     <ul>
-                        <li><strong>進階查詢:</strong> CTE, Window Functions, PIVOT, CROSS/OUTER APPLY</li>
-                        <li><strong>商業智慧:</strong> SSAS (MDX), Power BI (DAX, 資料建模)</li>
-                        <li><strong>效能與自動化:</strong> Page Compression, Columnstore Index, Python 基礎腳本撰寫</li>
+                        <li><strong>進階查詢:</strong> 熟練使用 CTE, Window Functions, PIVOT, CROSS/OUTER APPLY 處理複雜數據邏輯。</li>
+                        <li><strong>商業智慧:</strong> 熟悉 SSAS (MDX) 建立 Cube，運用 Power BI (DAX) 進行資料建模與視覺化。</li>
+                        <li><strong>效能與開發:</strong> 實作資料頁壓縮 (PAGE) 與 Columnstore Index；具備 Python 自動化腳本開發能力。</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2 class="section-title">持續精進目標 (Current Technical Focus)</h2>
-            <p>致力於打造極致效能與高度自動化的資料處理流程：</p>
+            <h2 class="section-title">技術精進目標 (Current Technical Focus)</h2>
+            <p>目前正致力於深化以下領域，以打造極致效能的資料處理流程：</p>
             <div>
-                <span class="tag">B-Tree 索引架構</span>
-                <span class="tag">Execution Plan 判讀</span>
+                <span class="tag">B-Tree 索引架構設計</span>
+                <span class="tag">Execution Plan 判讀 (Seek vs Scan)</span>
                 <span class="tag">In-Memory OLTP</span>
                 <span class="tag">Extended Events</span>
                 <span class="tag">Query Store</span>
-                <span class="tag">SQL Server Agent 排程</span>
-                <span class="tag">XML/JSON 解析</span>
+                <span class="tag">SQL Server Agent 排程維護</span>
+                <span class="tag">XML/JSON 格式轉換解析</span>
             </div>
         </section>
 
         <section>
-            <h2 class="section-title">專案作品集 (Featured Projects)</h2>
+            <h2 class="section-title">跨域工作經歷 (Professional Experience)</h2>
             <div class="card" style="margin-bottom: 1rem;">
-                <h3>企業級銷售數據倉儲與自動化視覺化</h3>
-                <p><strong>技術:</strong> T-SQL, SSAS, MDX, Power BI, DAX</p>
-                <p>使用進階 T-SQL 清整原始交易資料並建立 SSAS 模型。透過 Power BI 撰寫 DAX 建立關鍵指標，並實作 Row-Level Security 確保跨部門數據存取安全。</p>
+                <h3>跨國實務營運與執行 (Working Holiday)</h3>
+                <span class="date">澳洲 | 2020 - 2024</span>
+                <ul>
+                    <li>於 PM Fresh 等企業擔任生產線與物流人員 (Process worker, Cargo Packer)，適應高強度與快節奏的工作環境。</li>
+                    <li>在跨文化、全英文環境中執行各項任務，展現高度的環境適應力與溝通協作能力。</li>
+                    <li>培養出對工作極強的韌性，以及優異的獨立解決問題能力。</li>
+                </ul>
             </div>
             <div class="card">
-                <h3>資料庫變更稽核與災難復原實作</h3>
-                <p><strong>技術:</strong> SQL Server, DML Triggers, TDE, PiTR</p>
-                <p>建立完整的資料庫稽核追蹤系統，利用 DML Trigger 記錄核心資料表變更。規劃備份策略並撰寫演練腳本，展示特定時間點還原 (PiTR) 能力。</p>
+                <h3>志願役士官</h3>
+                <span class="date">馬祖防衛部指揮部 | 2014/09 - 2019/12</span>
+                <ul>
+                    <li><strong>部隊管理與領導：</strong> 管理 13 人以上團隊，作為軍官與士兵間的橋樑，確保戰略指令與日常任務確實執行。</li>
+                    <li><strong>行政與系統化作業：</strong> 負責文件資料輸入、建檔與公文彙整，培養出嚴謹的文件檔案處理與組織協調能力。</li>
+                    <li><strong>危機應變與後勤：</strong> 參與防災規劃與緊急事故處理，具備高壓環境下快速應變與資源調度的能力。</li>
+                </ul>
             </div>
         </section>
+
+        <section>
+            <h2 class="section-title">教育背景與專業證照 (Education & Certifications)</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🎓 學歷</h3>
+                    <p><strong>私立東海大學</strong><br>國際貿易系 | 大學畢業 (2009 - 2013)</p>
+                </div>
+                <div class="card">
+                    <h3>📜 證照與語言</h3>
+                    <ul>
+                        <li>基礎採購檢定 A.P.S.</li>
+                        <li>人身保險業務員</li>
+                        <li>英文：具備全英語環境生活與工作溝通能力</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <footer>
-        <p>&copy; 2026 [你的名字]. Built with HTML/CSS and hosted on GitHub Pages.</p>
+        <p>&copy; 2026 Elias Liou (劉翔維). Built with HTML/CSS and hosted on GitHub Pages.</p>
     </footer>
 
 </body>
