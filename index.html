@@ -1,11 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>個人簡歷 | 數據分析與資料庫工程師</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 4rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        h1 { color: #ffffff; margin-bottom: 0.5rem; }
+        h2 { color: var(--accent-color); font-weight: 400; margin-top: 0; }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        section { margin-bottom: 3rem; }
+        .section-title {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+        .card h3 { margin-top: 0; color: var(--accent-color); }
+        ul { padding-left: 1.2rem; }
+        li { margin-bottom: 0.5rem; }
+        .tag {
+            display: inline-block;
+            background-color: rgba(88, 166, 255, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(88, 166, 255, 0.4);
+            padding: 0.2rem 0.6rem;
+            border-radius: 2em;
+            font-size: 0.85rem;
+            margin: 0.2rem;
+        }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>我的個人簡歷</h1>
+
+    <header>
+        <h1>[你的名字]</h1>
+        <h2>Data Engineer / BI Professional</h2>
+        <p>
+            <a href="mailto:your.email@example.com">Email</a> | 
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a> | 
+            <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+        </p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2 class="section-title">關於我 (About Me)</h2>
+            <p>專注於企業級資料庫架構設計、進階 T-SQL 開發與商業數據視覺化的工程師。具備紮實的 SQL Server 管理經驗，涵蓋災難復原 (DR)、精細權限控管 (Security) 與程式化物件開發。不僅能確保資料底層的高可用性與安全性，亦能透過 SSAS 與 Power BI 將複雜數據轉化為具商業價值的洞察。</p>
+        </section>
+
+        <section>
+            <h2 class="section-title">核心技術棧 (Core Competencies)</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🏢 Database Architecture & Security</h3>
+                    <ul>
+                        <li><strong>災難復原 (DR):</strong> Point-in-Time Recovery, NO_TRUNCATE, TDE 憑證加密備份</li>
+                        <li><strong>資安控管:</strong> DCL (GRANT/DENY/REVOKE), RLS (Row-Level Security)</li>
+                        <li><strong>程式化與稽核:</strong> SP (OUTPUT/RECOMPILE), UDF, DML Triggers (inserted/deleted) 實作稽核</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>⚙️ Advanced T-SQL & BI</h3>
+                    <ul>
+                        <li><strong>進階查詢:</strong> CTE, Window Functions, PIVOT, CROSS/OUTER APPLY</li>
+                        <li><strong>商業智慧:</strong> SSAS (MDX), Power BI (DAX, 資料建模)</li>
+                        <li><strong>效能與自動化:</strong> Page Compression, Columnstore Index, Python 基礎腳本撰寫</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">持續精進目標 (Current Technical Focus)</h2>
+            <p>致力於打造極致效能與高度自動化的資料處理流程：</p>
+            <div>
+                <span class="tag">B-Tree 索引架構</span>
+                <span class="tag">Execution Plan 判讀</span>
+                <span class="tag">In-Memory OLTP</span>
+                <span class="tag">Extended Events</span>
+                <span class="tag">Query Store</span>
+                <span class="tag">SQL Server Agent 排程</span>
+                <span class="tag">XML/JSON 解析</span>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">專案作品集 (Featured Projects)</h2>
+            <div class="card" style="margin-bottom: 1rem;">
+                <h3>企業級銷售數據倉儲與自動化視覺化</h3>
+                <p><strong>技術:</strong> T-SQL, SSAS, MDX, Power BI, DAX</p>
+                <p>使用進階 T-SQL 清整原始交易資料並建立 SSAS 模型。透過 Power BI 撰寫 DAX 建立關鍵指標，並實作 Row-Level Security 確保跨部門數據存取安全。</p>
+            </div>
+            <div class="card">
+                <h3>資料庫變更稽核與災難復原實作</h3>
+                <p><strong>技術:</strong> SQL Server, DML Triggers, TDE, PiTR</p>
+                <p>建立完整的資料庫稽核追蹤系統，利用 DML Trigger 記錄核心資料表變更。規劃備份策略並撰寫演練腳本，展示特定時間點還原 (PiTR) 能力。</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 [你的名字]. Built with HTML/CSS and hosted on GitHub Pages.</p>
+    </footer>
+
 </body>
 </html>
