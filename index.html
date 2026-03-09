@@ -6,7 +6,8 @@
     <title>劉翔維 Elias | 數據分析與資料庫工程師</title>
     <style>
         :root {
-            var(--bg-color): #f4f6f8;
+            /* 若你想改成圖片中的暗紅色，可以把 --accent-color 改成 #b35656 */
+            --bg-color: #f4f6f8;
             --text-color: #333333;
             --text-light: #555555;
             --accent-color: #0056b3; 
@@ -16,7 +17,6 @@
             --tag-border: #b3d4f5;
         }
         
-        /* 基礎設定與平滑滾動 */
         html { scroll-behavior: smooth; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -28,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* 標頭動態設計 */
         header {
             text-align: center;
             padding: 6rem 1rem 4rem;
@@ -43,7 +42,6 @@
             letter-spacing: 2px;
         }
         
-        /* 打字機特效 */
         .typing-container {
             display: inline-block;
             overflow: hidden;
@@ -74,9 +72,7 @@
             font-weight: 500;
             transition: color 0.3s ease;
         }
-        .contact-info a:hover { 
-            color: var(--accent-color); 
-        }
+        .contact-info a:hover { color: var(--accent-color); }
 
         .container {
             max-width: 900px;
@@ -87,22 +83,93 @@
         .section-title {
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 0.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             color: #1a1a1a;
             font-size: 1.8rem;
             display: inline-block;
         }
 
-        .grid {
+        /* -------------------------------------
+           全新視覺化技能區塊 (Visual Skills) 
+           ------------------------------------- */
+        .skill-category {
+            margin-bottom: 3rem;
+        }
+        .skill-category-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+        }
+        .skill-category-title::before {
+            content: "—";
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .skills-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+        .skill-name {
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        /* 圓點評分系統設定 */
+        .dots-container {
+            display: flex;
+            gap: 6px;
+        }
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            background-color: transparent; /* 預設空心 */
+            transition: background-color 0.8s ease-out; /* 動畫填滿時間 */
+        }
+        
+        /* 觸發動畫：當 reveal.active 時，.filled 的圓點填上顏色 */
+        .reveal.active .dot.filled {
+            background-color: var(--accent-color);
+        }
+
+        /* 為了讓填滿有先後順序的動態感，加入延遲 */
+        .reveal.active .dot.filled:nth-child(1) { transition-delay: 0.1s; }
+        .reveal.active .dot.filled:nth-child(2) { transition-delay: 0.2s; }
+        .reveal.active .dot.filled:nth-child(3) { transition-delay: 0.3s; }
+        .reveal.active .dot.filled:nth-child(4) { transition-delay: 0.4s; }
+        .reveal.active .dot.filled:nth-child(5) { transition-delay: 0.5s; }
+
+        /* 原本的卡片設計保留給經歷和專案使用 */
+        .grid-cards {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.8rem;
         }
         @media (min-width: 768px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-cards { grid-template-columns: repeat(2, 1fr); }
         }
-
-        /* 卡片動態懸停特效 */
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -116,13 +183,10 @@
             box-shadow: 0 12px 20px rgba(0, 86, 179, 0.08);
             border-color: var(--tag-border);
         }
-
         .card h3 { margin-top: 0; color: var(--accent-color); font-size: 1.25rem; }
         .card .date { color: #888; font-size: 0.9rem; margin-bottom: 0.8rem; display: block; font-weight: 500;}
         ul { padding-left: 1.2rem; color: var(--text-light); }
         li { margin-bottom: 0.6rem; }
-
-        /* 標籤懸停特效 */
         .tag {
             display: inline-block;
             background-color: var(--tag-bg);
@@ -149,14 +213,11 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-
-        /* 滾動浮現 (Scroll Reveal) 的初始隱藏狀態 */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s ease-out;
         }
-        /* 觸發後的顯示狀態 */
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
@@ -185,44 +246,131 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">核心技術棧 (Core Competencies)</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>🏢 Database Administration & Security</h3>
-                    <ul>
-                        <li><strong>管理與監控:</strong> 熟悉 SQL Server 建置與 TroubleShooting，精通 Profiler 與擴充事件 (Extended Events) 監控；運用 SQL Agent 設定排程與維護計畫。</li>
-                        <li><strong>災難復原 (DR):</strong> 實作特定時間點還原 (PiTR)、備份與還原策略規劃。</li>
-                        <li><strong>資安防護:</strong> 熟稔 DCL 權限管控、資料加密配置、DDL Trigger 稽核以及 Query Store 應用。</li>
-                    </ul>
+            <h2 class="section-title">核心技術棧 (Skills)</h2>
+            
+            <div class="skill-category">
+                <div class="skill-category-title">DATABASE ADMINISTRATION</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <span class="skill-name">SQL Server</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Disaster Recovery</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Troubleshooting</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Security & RLS</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>⚙️ Advanced T-SQL & Tuning</h3>
-                    <ul>
-                        <li><strong>進階查詢與開發:</strong> 熟練運用 CTE、子查詢、預存程序 (SP)、函數與觸發程序 (Trigger) 進行複雜商業邏輯開發。</li>
-                        <li><strong>效能調校:</strong> 具備 Execution Plan 判讀能力，精通傳統 B-Tree 與 Columnstore Index 製作與調校；熟稔資料壓縮與記憶體表評估。</li>
-                        <li><strong>資料處理:</strong> 熟悉關聯式資料與 XML / JSON 格式的解析與轉換。</li>
-                    </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">ADVANCED T-SQL & TUNING</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <span class="skill-name">T-SQL (CTE/Window)</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Execution Plan</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Index Tuning</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">XML / JSON</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>📊 Business Intelligence & DAX</h3>
-                    <ul>
-                        <li><strong>進階 DAX 建模:</strong> 精通變數宣告 (VAR)、迭代運算 (SUMX/MINX) 與上下文轉換 (CALCULATE/FILTER/ALLEXCEPT)，能處理跨維度與佔比等複雜商業計算。</li>
-                        <li><strong>BI 生態系整合:</strong> 熟悉 SSIS (ETL整合)、SSAS (多維度模型)、SSRS (報表服務) 以及 Power BI Report Server 部署。</li>
-                        <li><strong>權限與動態邏輯:</strong> 實作 RLS (資料列層級安全性) 及動態情境切換 (SWITCH)。</li>
-                    </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">BUSINESS INTELLIGENCE</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <span class="skill-name">Power BI</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">DAX</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">SSAS (MDX)</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">SSIS / SSRS</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>🤖 Data Science & Development</h3>
-                    <ul>
-                        <li><strong>AI 與預測模型:</strong> 具備 SQL Server 結合 Python / R / Java 的開發概念；了解資料預處理及迴歸、決策樹、隨機森林、類神經網路等機器學習模型評估。</li>
-                        <li><strong>前端網頁基礎:</strong> 具備 HTML5、CSS3、JavaScript 與 jQuery 基礎能力，能理解並輔助前端資料視覺化呈現。</li>
-                    </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">DATA SCIENCE & FRONTEND</div>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <span class="skill-name">Python / R</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Machine Learning</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">HTML5 / CSS3</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">JavaScript / jQuery</span>
+                        <div class="dots-container">
+                            <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">技術精進目標 (Current Technical Focus)</h2>
+            <h2 class="section-title">技術精進目標 (Focus)</h2>
             <p>持續關注數據技術的最新發展，致力於打造高可用性的現代化資料架構：</p>
             <div>
                 <span class="tag">大型雲端資料倉儲架構 (Azure/AWS)</span>
@@ -234,13 +382,11 @@
 
         <section class="reveal">
             <h2 class="section-title">專案作品集 (Featured Projects)</h2>
-            <div class="grid">
-                
+            <div class="grid-cards">
                 <div class="card">
                     <h3>🚀 [請填寫：例如 跨國電商銷售分析與視覺化儀表板]</h3>
                     <span class="date">2026 / 03 - 2026 / 05</span>
-                    <p><strong>專案目標：</strong> [簡述專題解決了什麼痛點？例如：整合多國銷售數據，找出業績增長與衰退的關鍵維度。]</p>
-                    
+                    <p><strong>專案目標：</strong> 整合多國銷售數據，找出業績增長與衰退的關鍵維度。</p>
                     <p style="margin-top: 1rem; margin-bottom: 0.5rem;"><strong>使用技術：</strong></p>
                     <div style="margin-bottom: 1rem;">
                         <span class="tag">SQL Server</span>
@@ -248,24 +394,22 @@
                         <span class="tag">Power BI</span>
                         <span class="tag">DAX</span>
                     </div>
-                    
                     <ul>
-                        <li><strong>進階 DAX 應用：</strong> 運用 <code>CALCULATE</code>、<code>ALLEXCEPT</code> 與變數，動態計算「佔全球營業額百分比」與「各國業績達標率」。</li>
-                        <li><strong>資料清理與建模：</strong> 使用進階 T-SQL 處理原始交易紀錄，並透過 SSAS 建置具備時間智慧 (Time Intelligence) 的多維度 Cube 模型。</li>
-                        <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢與高潛力市場。</li>
+                        <li><strong>進階 DAX 應用：</strong> 運用 <code>CALCULATE</code> 等函式，動態計算「佔全球營業額百分比」。</li>
+                        <li><strong>資料清理與建模：</strong> 使用進階 T-SQL 處理原始交易紀錄，並建置 SSAS 多維度模型。</li>
+                        <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢。</li>
                     </ul>
-                    
                     <div style="margin-top: 1.5rem;">
-                        <a href="你的GitHub專題連結" target="_blank" style="display: inline-block; background-color: var(--tag-bg); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--tag-border); color: var(--accent-color); text-decoration: none; font-weight: bold;">
+                        <a href="#" target="_blank" style="display: inline-block; background-color: var(--tag-bg); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--tag-border); color: var(--accent-color); text-decoration: none; font-weight: bold;">
                             🐙 查看 GitHub 原始碼與分析報告 ➜
                         </a>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">跨域工作經歷 (Professional Experience)</h2>
+            <h2 class="section-title">工作經歷 (Experience)</h2>
             <div class="card" style="margin-bottom: 1.5rem;">
                 <h3>澳洲打工度假 (Working Holiday)</h3>
                 <span class="date">澳洲 | 2020 - 2024</span>
@@ -287,8 +431,8 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">教育背景與專業證照 (Education & Certifications)</h2>
-            <div class="grid">
+            <h2 class="section-title">教育與證照 (Education)</h2>
+            <div class="grid-cards">
                 <div class="card">
                     <h3>🎓 學歷</h3>
                     <p><strong>私立東海大學</strong><br>國際貿易系 | 大學畢業 (2009 - 2013)</p>
@@ -316,7 +460,7 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
+                var elementVisible = 80;
 
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
@@ -324,7 +468,7 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        reveal();
+        reveal(); // 初始化
     </script>
 </body>
 </html>
