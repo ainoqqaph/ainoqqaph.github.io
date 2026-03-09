@@ -176,7 +176,7 @@
         }
 
         /* =========================================
-           視覺化技能區塊 (Dots Matrix) - 舒適版
+           視覺化技能區塊 (Dots Matrix) - 質感升級版
            ========================================= */
         .skill-category { margin-bottom: 3.5rem; }
         .skill-category-title {
@@ -207,23 +207,33 @@
         .skill-item { display: flex; flex-direction: column; }
         .skill-name { font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-main); font-weight: 600; }
         
-        .dots-container { display: flex; gap: 6px; }
+        /* --- 圓點核心樣式更新 --- */
+        .dots-container { display: flex; gap: 8px; align-items: center; }
         .dot {
             width: 12px; height: 12px;
             border-radius: 50%;
-            background-color: #e2e8f0; /* 空心的淡灰色 */
-            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            /* 更有質感的空心狀態：微凹陷感與極淡邊框 */
+            background-color: #f1f5f9;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px #e2e8f0;
+            /* 加入彈性動畫 (cubic-bezier) 讓填滿時有 Q 彈感 */
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            transform: scale(0.9);
         }
-        /* 觸發動畫：填上舒適的專業藍 */
+        
+        /* 觸發動畫：填上【科技光流】漸層與發光陰影 */
         .reveal.active .dot.filled {
-            background-color: var(--accent-primary);
+            /* 如果你想換顏色，請修改下面這一行 background 和 box-shadow 的顏色 */
+            background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
+            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+            transform: scale(1.15); /* 填滿時微微放大突出 */
         }
+        
+        /* 依序填滿的延遲動畫 */
         .reveal.active .dot.filled:nth-child(1) { transition-delay: 0.1s; }
         .reveal.active .dot.filled:nth-child(2) { transition-delay: 0.2s; }
         .reveal.active .dot.filled:nth-child(3) { transition-delay: 0.3s; }
         .reveal.active .dot.filled:nth-child(4) { transition-delay: 0.4s; }
         .reveal.active .dot.filled:nth-child(5) { transition-delay: 0.5s; }
-
         /* 專案按鈕 */
         .btn-link {
             display: inline-block;
