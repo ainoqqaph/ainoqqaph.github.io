@@ -6,28 +6,23 @@
     <title>劉翔維 Elias | 數據分析與資料庫工程師</title>
     <style>
         :root {
-            /* 全新 AI 科技深色色系 */
-            --bg-dark: #090a0f;
-            --bg-card: rgba(20, 22, 30, 0.6);
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent-glow: #00f0ff;      /* 霓虹科技藍 */
-            --accent-secondary: #3b82f6; /* 深邃藍 */
-            --border-color: rgba(255, 255, 255, 0.08);
-            --tag-bg: rgba(0, 240, 255, 0.1);
-            --tag-border: rgba(0, 240, 255, 0.3);
+            /* 舒適的明亮科技色系 */
+            --bg-body: #f8fafc;        /* 極淡的灰藍，護眼背景 */
+            --bg-card: #ffffff;        /* 純白卡片 */
+            --text-main: #1e293b;      /* 深灰藍字體，比純黑柔和 */
+            --text-muted: #64748b;     /* 次要文字顏色 */
+            --accent-primary: #2563eb; /* 專業知性藍 */
+            --accent-glow: rgba(37, 99, 235, 0.08); /* 柔和的滑鼠追蹤光暈 */
+            --border-color: #e2e8f0;   /* 柔和的邊框 */
+            --tag-bg: #eff6ff;         /* 標籤底色 */
+            --tag-border: #bfdbfe;     /* 標籤邊框 */
         }
         
-        /* 平滑滾動與背景網格設計 */
+        /* 平滑滾動 */
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-dark);
-            /* 繪製淡淡的數據網格背景 */
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.8;
             margin: 0;
@@ -35,51 +30,48 @@
             overflow-x: hidden;
         }
 
-        /* 標頭：融入未來感的光暈 */
+        /* 標頭：乾淨俐落的微漸層 */
         header {
             text-align: center;
-            padding: 8rem 1rem 5rem;
+            padding: 7rem 1rem 5rem;
             position: relative;
+            background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%);
             border-bottom: 1px solid var(--border-color);
-            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
         }
         h1 { 
-            color: #ffffff; 
+            color: #0f172a; 
             margin-bottom: 0.5rem; 
             font-size: 3.2rem; 
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            letter-spacing: 2px;
+            font-weight: 800;
         }
         
-        /* 終端機打字特效 */
+        /* 打字機特效 */
         .typing-container {
             display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            border-right: 2px solid var(--accent-glow);
+            border-right: 2px solid var(--accent-primary);
             animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
-            color: var(--accent-glow);
+            color: var(--accent-primary);
             font-size: 1.4rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 1.5rem;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-glow); } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-primary); } }
 
         .contact-info a, .contact-info span {
             color: var(--text-muted);
             text-decoration: none;
             margin: 0 1rem;
             font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        .contact-info a:hover { 
-            color: var(--accent-glow); 
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-        }
+        .contact-info a:hover { color: var(--accent-primary); }
 
         .container {
             max-width: 1000px;
@@ -88,31 +80,31 @@
         }
         section { margin-bottom: 5rem; }
         
-        /* 標題加上科技感的左側裝飾線 */
+        /* 標題設計 */
         .section-title {
             position: relative;
-            padding-left: 1rem;
+            padding-bottom: 0.8rem;
             margin-bottom: 2.5rem;
-            color: #ffffff;
+            color: #0f172a;
             font-size: 1.8rem;
-            letter-spacing: 1px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            display: inline-block;
         }
-        .section-title::before {
+        .section-title::after {
             content: '';
             position: absolute;
             left: 0;
-            top: 10%;
-            height: 80%;
-            width: 4px;
-            background: var(--accent-glow);
-            border-radius: 2px;
-            box-shadow: 0 0 10px var(--accent-glow);
+            bottom: -2px;
+            height: 2px;
+            width: 40%;
+            background: var(--accent-primary);
         }
 
         p { color: var(--text-muted); font-size: 1.05rem; }
 
         /* =========================================
-           毛玻璃卡片與滑鼠追蹤光暈 (AI 互動核心) 
+           柔和白卡片與滑鼠追蹤光暈
            ========================================= */
         .grid-cards {
             display: grid;
@@ -126,73 +118,72 @@
         .card {
             position: relative;
             background: var(--bg-card);
-            backdrop-filter: blur(12px); /* 毛玻璃特效 */
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
-            overflow: hidden; /* 隱藏溢出的光暈 */
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s;
+            padding: 2.2rem;
+            overflow: hidden; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
         }
         
-        /* 滑鼠追蹤的漸層光圈 */
+        /* 滑鼠追蹤的柔和光圈 (Light Mode版) */
         .card::before {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            /* 使用 JS 傳入的滑鼠座標變數，預設在中心 */
             background: radial-gradient(
-                800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(0, 240, 255, 0.06), 
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                var(--accent-glow), 
                 transparent 40%
             );
             z-index: 0;
             opacity: 0;
             transition: opacity 0.5s;
-            pointer-events: none; /* 確保不會影響內部點擊 */
+            pointer-events: none; 
         }
         .card:hover::before { opacity: 1; }
         .card:hover {
             transform: translateY(-5px);
-            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
         }
 
-        /* 確保卡片內容在光暈上方 */
         .card > * { position: relative; z-index: 1; }
 
-        .card h3 { margin-top: 0; color: #ffffff; font-size: 1.3rem; letter-spacing: 0.5px; }
-        .card .date { color: var(--accent-glow); font-size: 0.85rem; margin-bottom: 1rem; display: block; letter-spacing: 1px; text-transform: uppercase; }
+        .card h3 { margin-top: 0; color: var(--text-main); font-size: 1.3rem; font-weight: 700; }
+        .card .date { color: var(--accent-primary); font-size: 0.85rem; margin-bottom: 1rem; display: block; font-weight: 600; letter-spacing: 0.5px; }
         ul { padding-left: 1.2rem; color: var(--text-muted); }
         li { margin-bottom: 0.8rem; }
-        strong { color: var(--text-main); }
+        strong { color: var(--text-main); font-weight: 600; }
 
-        /* 科技感標籤 */
+        /* 舒適的標籤 */
         .tag {
             display: inline-block;
             background-color: var(--tag-bg);
-            color: var(--accent-glow);
+            color: var(--accent-primary);
             border: 1px solid var(--tag-border);
             padding: 0.3rem 1rem;
-            border-radius: 4px; /* 改為微圓角，更符合程式碼編輯器風格 */
+            border-radius: 20px;
             font-size: 0.85rem;
             margin: 0.4rem 0.4rem 0 0;
-            letter-spacing: 0.5px;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
         .tag:hover {
-            background-color: var(--accent-glow);
-            color: #000000;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+            background-color: var(--accent-primary);
+            color: #ffffff;
+            border-color: var(--accent-primary);
+            transform: scale(1.03);
         }
 
         /* =========================================
-           視覺化技能區塊 (Dots Matrix) - 霓虹升級版
+           視覺化技能區塊 (Dots Matrix) - 舒適版
            ========================================= */
         .skill-category { margin-bottom: 3.5rem; }
         .skill-category-title {
-            font-size: 1rem;
-            color: var(--text-main);
-            letter-spacing: 2px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 1.5px;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -200,10 +191,11 @@
         .skill-category-title::before {
             content: "";
             display: block;
-            width: 30px;
-            height: 1px;
-            background: var(--text-muted);
-            margin-right: 15px;
+            width: 24px;
+            height: 2px;
+            background: var(--accent-primary);
+            margin-right: 12px;
+            border-radius: 2px;
         }
         .skills-grid {
             display: grid;
@@ -213,21 +205,19 @@
         @media (min-width: 768px) { .skills-grid { grid-template-columns: repeat(4, 1fr); } }
         
         .skill-item { display: flex; flex-direction: column; }
-        .skill-name { font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-muted); font-family: monospace; }
+        .skill-name { font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-main); font-weight: 600; }
         
-        .dots-container { display: flex; gap: 8px; }
+        .dots-container { display: flex; gap: 6px; }
         .dot {
             width: 12px; height: 12px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1); /* 空心改為暗淡背景 */
-            transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s;
+            background-color: #e2e8f0; /* 空心的淡灰色 */
+            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* 觸發動畫：填上發光的霓虹色 */
+        /* 觸發動畫：填上舒適的專業藍 */
         .reveal.active .dot.filled {
-            background-color: var(--accent-glow);
-            box-shadow: 0 0 8px var(--accent-glow);
+            background-color: var(--accent-primary);
         }
-        /* 動畫延遲產生流動感 */
         .reveal.active .dot.filled:nth-child(1) { transition-delay: 0.1s; }
         .reveal.active .dot.filled:nth-child(2) { transition-delay: 0.2s; }
         .reveal.active .dot.filled:nth-child(3) { transition-delay: 0.3s; }
@@ -237,29 +227,27 @@
         /* 專案按鈕 */
         .btn-link {
             display: inline-block;
-            background: transparent;
-            color: var(--accent-glow);
+            background: #ffffff;
+            color: var(--accent-primary);
             padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            border: 1px solid var(--accent-glow);
+            border-radius: 6px;
+            border: 2px solid var(--accent-primary);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.3s;
         }
         .btn-link:hover {
-            background: var(--accent-glow);
-            color: #000;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         footer {
             text-align: center;
             padding: 3rem 1rem;
-            border-top: 1px solid var(--border-color);
             color: var(--text-muted);
-            font-family: monospace;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         /* 滾動浮現設定 */
@@ -281,7 +269,7 @@
 
     <div class="container">
         <section class="reveal">
-            <h2 class="section-title">System.About_Me()</h2>
+            <h2 class="section-title">關於我 (About Me)</h2>
             <div class="card">
                 <p>專注於資料庫架構設計、進階 T-SQL 開發與全方位商業智慧 (BI) 解決方案的資料工程師。具備紮實的微軟數據生態系開發經驗，涵蓋資料庫建置維運、效能調校、ETL 流程設計，以及運用進階 DAX 語法開發具商業洞察力的視覺化儀表板。</p>
                 <p>擁有 5 年志願役軍官部隊領導歷練與近 5 年澳洲跨國工作經驗，培養了極強的抗壓韌性、高壓下縝密的邏輯思維以及優異的獨立作業與團隊協作能力。善於將過去在行政管理與跨部門協調的經驗，轉化為釐清商業需求與數據治理的養分，致力於從底層資料結構到前端 AI 預測模型，打造穩健且高效的數據處理管線。</p>
@@ -289,7 +277,7 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">Core_Competencies</h2>
+            <h2 class="section-title">核心技術棧 (Core Competencies)</h2>
             
             <div class="skill-category">
                 <div class="skill-category-title">DATABASE ADMINISTRATION</div>
@@ -381,10 +369,10 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">Future_Focus</h2>
+            <h2 class="section-title">技術精進目標 (Future Focus)</h2>
             <div class="card">
                 <p>持續關注數據技術的最新發展，致力於打造高可用性的現代化資料架構：</p>
-                <div style="margin-top: 1rem;">
+                <div style="margin-top: 1.5rem;">
                     <span class="tag">大型雲端資料倉儲架構 (Azure/AWS)</span>
                     <span class="tag">即時資料串流處理 (Real-time Streaming)</span>
                     <span class="tag">機器學習模型落地佈署 (MLOps)</span>
@@ -394,14 +382,14 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">Featured_Projects</h2>
+            <h2 class="section-title">專案作品集 (Featured Projects)</h2>
             <div class="grid-cards">
                 <div class="card">
                     <h3>跨國電商銷售分析與視覺化儀表板</h3>
                     <span class="date">2026 / 03 - 2026 / 05</span>
                     <p><strong>專案目標：</strong> 整合多國銷售數據，找出業績增長與衰退的關鍵維度。</p>
-                    <p style="margin-top: 1rem; margin-bottom: 0.5rem;"><strong>使用技術：</strong></p>
-                    <div style="margin-bottom: 1.2rem;">
+                    <p style="margin-top: 1.5rem; margin-bottom: 0.5rem;"><strong>使用技術：</strong></p>
+                    <div style="margin-bottom: 1.5rem;">
                         <span class="tag">SQL Server</span>
                         <span class="tag">SSAS</span>
                         <span class="tag">Power BI</span>
@@ -414,7 +402,7 @@
                     </ul>
                     <div style="margin-top: 2rem;">
                         <a href="#" class="btn-link">
-                            [>_] 查看 GitHub 原始碼與分析報告
+                            查看 GitHub 原始碼與分析報告 ➜
                         </a>
                     </div>
                 </div>
@@ -422,7 +410,7 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">Experience & Education</h2>
+            <h2 class="section-title">經歷與教育 (Experience & Education)</h2>
             <div class="grid-cards">
                 <div class="card">
                     <h3>澳洲打工度假 (Working Holiday)</h3>
@@ -462,8 +450,7 @@
     </div>
 
     <footer>
-        <p>INITIALIZING... SYSTEM READY.</p>
-        <p>&copy; 2026 Elias. Designed with AI Interactive Aesthetics.</p>
+        <p>&copy; 2026 Elias. Designed with Modern Soft UI.</p>
     </footer>
 
     <script>
@@ -483,7 +470,7 @@
         window.addEventListener("scroll", reveal);
         reveal(); // 初始化觸發
 
-        // 2. AI 互動核心：卡片滑鼠追蹤光暈特效 (Mouse-tracking Glow)
+        // 2. 舒適版 AI 微互動：卡片滑鼠追蹤光暈特效
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect(),
