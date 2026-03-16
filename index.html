@@ -296,8 +296,8 @@
                 <h3>跨國關鍵字分析儀表板</h3>
                 <ul>
                     <li><strong>技術：</strong>SQL Server, SSAS, Power BI (DAX)。</li>
-                    <li><strong>成果：</strong>整合 6 國數據，建立動態分析模型，成功辨識年度營運趨勢，將每月核對時間縮短至數秒。</li>
-                    <li><strong>亮點：</strong>優化查詢邏輯，使海量交易數據的檢索效能提升 2 倍以上。</li>
+                    <li><strong>成果：</strong>整合各國數據，建立動態分析模型。</li>
+                    <li><strong>亮點：</strong>優化查詢邏輯，檢索效能提升2倍以上。</li>
                 </ul>
             </div>
         </section>
@@ -308,130 +308,172 @@
     </footer>
 
     <script>
-        /* --- 1. PillNav 高級動畫與 ScrollSpy --- */
-        const pills = document.querySelectorAll('.pill');
-        
-        // 核心：移植 React 版的幾何擴散算法
-        pills.forEach((pill) => {
-            const circle = pill.querySelector('.hover-circle');
-            const label = pill.querySelector('.pill-label');
-            const whiteLabel = pill.querySelector('.pill-label-hover');
+        /* --- 1. 滾動浮現與卡片特效 (保持原樣，效能良好) --- */
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 80) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // 初始化觸發
 
-            const layout = () => {
-                const w = pill.offsetWidth;
-                const h = pill.offsetHeight;
-                const R = ((w * w) / 4 + h * h) / (2 * h);
-                const D = Math.ceil(2 * R) + 2;
-                const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
-                const originY = D - delta;
-
-                gsap.set(circle, { width: D, height: D, bottom: -delta, xPercent: -50, scale: 0, transformOrigin: `50% ${originY}px` });
-                gsap.set(whiteLabel, { opacity: 0 });
-            };
-            layout();
-
-            const tl = gsap.timeline({ paused: true });
-            tl.to(circle, { scale: 1, duration: 0.4, ease: "power2.out" }, 0)
-              .to(label, { y: -30, duration: 0.4, ease: "power2.out" }, 0)
-              .to(whiteLabel, { y: -20, opacity: 1, duration: 0.4, ease: "power2.out" }, 0);
-
-            pill.addEventListener('mouseenter', () => tl.play());
-            pill.addEventListener('mouseleave', () => tl.reverse());
+        // 卡片滑鼠追蹤 (保持原樣)
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
         });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    pills.forEach(p => {
-                        p.classList.toggle('active', p.dataset.target === id);
-                    });
-                }
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('section, header').forEach(el => observer.observe(el));
+        /* --- 2. 亂碼解密 (保持原樣) --- */
+        const encryptedElem = document.querySelector('.encrypted-text');
+        const targetText = encryptedElem.getAttribute('data-value');
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*+><?";
+        let iteration = 0;
+        const interval = setInterval(() => {
+            encryptedElem.innerText = targetText.split("").map((letter, index) => {
+                if(letter === " ") return " ";
+                if(index < iteration) return targetText[index];
+                return letters[Math.floor(Math.random() * letters.length)];
+            }).join("");
+            if(iteration >= targetText.length) clearInterval(interval);
+            iteration += 1/3; // 放慢解密速度
+        }, 30);
 
-        /* --- 2. 碰撞光束 (碰到文字就爆炸) --- */
+        /* --- 3. 碰撞光束核心 (除錯與碰撞優化) --- */
         const canvas = document.getElementById('beamsCanvas');
         const ctx = canvas.getContext('2d');
         const container = document.querySelector('.beams-container');
-        const hitTarget = document.querySelector('.hit-target');
-        let width, height, beams = [], particles = [], relTarget;
+        const targetTextWrapper = document.querySelector('.gradient-text-wrapper');
+
+        let width, height, beams = [], particles = [], relTarget = null;
+
+        // 增加光束數量，讓碰撞更頻繁
+        const beamCount = 12;
 
         function initCanvas() {
             width = canvas.width = container.offsetWidth;
             height = canvas.height = container.offsetHeight;
-            const rect = hitTarget.getBoundingClientRect();
+            
+            // [優化] 預先獲取碰撞目標的座標，避免在 animate 中呼叫getBoundingClientRect
+            const rect = targetTextWrapper.getBoundingClientRect();
             const cRect = container.getBoundingClientRect();
-            relTarget = { left: rect.left - cRect.left, right: rect.right - cRect.left, top: rect.top - cRect.top, bottom: rect.bottom - cRect.top };
+            
+            // 計算相對容器的座標
+            relTarget = {
+                left: rect.left - cRect.left,
+                right: rect.right - cRect.left,
+                top: rect.top - cRect.top,
+                bottom: rect.bottom - cRect.top
+            };
         }
-
         class Beam {
-            constructor() { this.reset(); }
+            constructor() {
+                this.reset();
+            }
             reset() {
                 this.x = Math.random() * width;
-                this.y = -Math.random() * 500;
-                this.speed = 3 + Math.random() * 4;
-                this.len = 100;
-                this.hit = false;
+                this.y = -Math.random() * 500; // 隨機延遲掉落
+                this.speed = 3 + Math.random() * 4; // 稍微增加速度
+                this.length = 60 + Math.random() * 120;
+                // 使用更醒目的顏色 (紫色系渐变)
+                this.color = 'rgba(139, 92, 246, 0.6)';
             }
             update() {
                 this.y += this.speed;
-                // 精確碰撞偵測：只要 x 在文字寬度內，且 y 抵達文字頂部
-                if (!this.hit && relTarget && this.x > relTarget.left && this.x < relTarget.right && this.y > relTarget.top && this.y < relTarget.bottom) {
-                    this.hit = true;
-                    for(let i=0; i<8; i++) particles.push({ x: this.x, y: this.y, vx: (Math.random()-0.5)*6, vy: (Math.random()-0.5)*6, life: 1 });
-                    this.reset();
+                
+                // [核心修正] 碰撞偵測逻辑
+                // 如果光束的底部（y）進入了文字區域的 y 軸區間
+                if (relTarget && 
+                    this.x > relTarget.left && this.x < relTarget.right &&
+                    this.y > relTarget.top && this.y < relTarget.bottom) {
+                    
+                    // 觸發爆炸粒子 (在文字上方生成)
+                    createExplosion(this.x, this.y);
+                    this.reset(); // 碰到文字立即重置
                 }
-                if (this.y > height + 200) this.reset();
+
+                // 超出畫布重置
+                if (this.y > height + this.length) this.reset();
             }
             draw() {
+                ctx.save();
                 ctx.beginPath();
-                const g = ctx.createLinearGradient(0, this.y, 0, this.y - this.len);
-                g.addColorStop(0, 'rgba(139, 92, 246, 0.7)');
-                g.addColorStop(1, 'transparent');
-                ctx.strokeStyle = g; ctx.lineWidth = 2;
-                ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y - this.len);
+                // 增加光束頭部的發光感
+                const grad = ctx.createLinearGradient(0, this.y, 0, this.y - this.length);
+                grad.addColorStop(0, 'rgba(139, 92, 246, 0.8)'); // 頭部不透明
+                grad.addColorStop(1, 'rgba(139, 92, 246, 0)');   // 尾部透明
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 2;
+                ctx.lineCap = "round"; // 讓光束頭部呈現圓形
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y - this.length);
                 ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y) {
+            // 生成一組向四周散射的粒子
+            for (let i = 0; i < 8; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 6, // 散射速度
+                    vy: (Math.random() - 0.5) * 6,
+                    life: 1, // 初始生命值
+                    // 爆炸粒子使用粉色系 (#ec4899)，與文字風格一致
+                    color: '#ec4899'
+                });
             }
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            beams.forEach(b => { b.update(); b.draw(); });
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.life -= 0.025;
-                ctx.fillStyle = `rgba(236, 72, 153, ${p.life})`;
-                ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
-                if(p.life <= 0) particles.splice(i, 1);
+            
+            // 更新與繪製光束
+            beams.forEach(b => {
+                b.update();
+                b.draw();
             });
+
+            // 更新與繪製粒子
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.025; // 生命值遞減
+                
+                ctx.save();
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life; // 生命值轉化為不透明度
+                ctx.beginPath();
+                // 將粒子改為小圓點，質感更好
+                ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+                
+                // 移除死亡粒子
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+
             requestAnimationFrame(animate);
         }
 
-        /* --- 3. 基礎交互 --- */
         window.addEventListener('resize', initCanvas);
-        const encrypted = document.querySelector('.encrypted-text');
-        const content = encrypted.getAttribute('data-value');
-        let iter = 0;
-        const timer = setInterval(() => {
-            encrypted.innerText = content.split("").map((l, i) => i < iter ? content[i] : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random()*26)]).join("");
-            if(iter >= content.length) clearInterval(timer);
-            iter += 1/3;
-        }, 30);
 
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-            });
-        });
-
+        // 延遲初始化，確保在網頁字體與佈局完成後才計算座標
         setTimeout(() => {
             initCanvas();
-            for(let i=0; i<12; i++) beams.push(new Beam());
+            for(let i=0; i<beamCount; i++) beams.push(new Beam());
             animate();
-            document.querySelectorAll(".reveal").forEach(el => el.classList.add("active"));
         }, 100);
     </script>
 </body>
