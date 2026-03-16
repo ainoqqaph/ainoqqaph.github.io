@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>劉翔維 Elias | 數據分析與資料庫工程師</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             /* 舒適的明亮科技色系 */
@@ -46,26 +51,17 @@
             font-weight: 800;
         }
         
-       /* 真人正常打字速度特效 */
-        .typing-container {
+        /* 亂碼解密特效 (Encrypted Text) */
+        .encrypted-text {
             display: inline-block;
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: none; /* 保持無游標的乾淨狀態 */
             color: var(--accent-primary);
             font-size: 1.4rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            
-            /* 關鍵密碼：字串剛好 28 個字元，所以設定 steps(40)  (備註：依您後來調整為4.0s) */
-            animation: typing 4.0s steps(40, end) forwards;
+            letter-spacing: 1px;
+            font-family: 'Fira Code', 'Courier New', Courier, monospace; 
         }
 
-        @keyframes typing { 
-            from { width: 0; } 
-            to { width: 100%; } 
-        }
         .contact-info a, .contact-info span {
             color: var(--text-muted);
             text-decoration: none;
@@ -215,20 +211,17 @@
         .dot {
             width: 12px; height: 12px;
             border-radius: 50%;
-            /* 更有質感的空心狀態：微凹陷感與極淡邊框 */
             background-color: #f1f5f9;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px #e2e8f0;
-            /* 加入彈性動畫 (cubic-bezier) 讓填滿時有 Q 彈感 */
             transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
             transform: scale(0.9);
         }
         
         /* 觸發動畫：填上【科技光流】漸層與發光陰影 */
         .reveal.active .dot.filled {
-            /* 如果你想換顏色，請修改下面這一行 background 和 box-shadow 的顏色 */
             background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
             box-shadow: 0 3px 6px rgba(37, 99, 235, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
-            transform: scale(1.15); /* 填滿時微微放大突出 */
+            transform: scale(1.15); 
         }
         
         /* 依序填滿的延遲動畫 */
@@ -237,6 +230,7 @@
         .reveal.active .dot.filled:nth-child(3) { transition-delay: 0.3s; }
         .reveal.active .dot.filled:nth-child(4) { transition-delay: 0.4s; }
         .reveal.active .dot.filled:nth-child(5) { transition-delay: 0.5s; }
+        
         /* 專案按鈕 */
         .btn-link {
             display: inline-block;
@@ -266,19 +260,77 @@
         /* 滾動浮現設定 */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 碰撞光束容器 */
+        .beams-container {
+            position: relative;
+            width: 100%;
+            height: 450px; /* 可調整高度 */
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #beamsCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .beams-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* 復刻 Demo 中的漸變文字 */
+        .gradient-text-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #a855f7, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
+        }
+                
     </style>
 </head>
 <body>
 
-    <header>
+    <header class="beams-container">
+    <canvas id="beamsCanvas"></canvas>
+    
+    <div class="beams-content">
         <h1>劉翔維 (Elias)</h1>
-        <div><div class="typing-container">Data Engineer / BI Analyst</div></div>
-        <div class="contact-info">
+        <div class="encrypted-text" data-value="Data Engineer / BI Analyst" style="font-size: 1.2rem; min-height: 1.5rem;">
+            Data Engineer / BI Analyst
+        </div>
+        
+        <div style="margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700;">
+            探索數據的 
+            <div class="gradient-text-wrapper">
+                <span class="gradient-text">碰撞與洞察</span>
+            </div>
+        </div>
+
+        <div class="contact-info" style="margin-top: 2rem;">
             <a href="mailto:noqqaph@gmail.com">noqqaph@gmail.com</a> | 
             <span>0933-849-436</span> | 
             <span>Taichung, Taiwan</span>
         </div>
-    </header>
+    </div>
+</header>
 
     <div class="container">
         <section class="reveal">
@@ -414,7 +466,7 @@
                         <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢。</li>
                     </ul>
                     <div style="margin-top: 2rem;">
-                        <a href="https://github.com/ainoqqaph/google-trends-crawler.git" class="btn-link">
+                        <a href="https://github.com/ainoqqaph/google-trends-crawler.git" target="_blank" class="btn-link">
                             查看 GitHub 原始碼與分析報告 ➜
                         </a>
                     </div>
@@ -467,34 +519,146 @@
     </footer>
 
     <script>
-        // 1. 滾動浮現動畫 (Scroll Reveal)
+        // 1. 滾動浮現與卡片特效 (保持原樣，效能良好)
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 80;
-
-                if (elementTop < windowHeight - elementVisible) {
+                if (elementTop < windowHeight - 80) {
                     reveals[i].classList.add("active");
                 }
             }
         }
         window.addEventListener("scroll", reveal);
-        reveal(); // 初始化觸發
+        reveal();
 
-        // 2. 舒適版 AI 微互動：卡片滑鼠追蹤光暈特效
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect(),
-                      x = e.clientX - rect.left,
-                      y = e.clientY - rect.top;
-                
-                // 將滑鼠座標寫入 CSS 變數
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
             });
         });
+
+        // 2. 亂碼解密 (優化 iteration 步長)
+        const encryptedElem = document.querySelector('.encrypted-text');
+        const targetText = encryptedElem.getAttribute('data-value');
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*+><?";
+        let iteration = 0;
+        const interval = setInterval(() => {
+            encryptedElem.innerText = targetText.split("").map((letter, index) => {
+                if(letter === " ") return " ";
+                if(index < iteration) return targetText[index];
+                return letters[Math.floor(Math.random() * letters.length)];
+            }).join("");
+            if(iteration >= targetText.length) clearInterval(interval);
+            iteration += 1 / 3;
+        }, 30);
+
+        // 3. 碰撞光束 (核心除錯區)
+        const canvas = document.getElementById('beamsCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.querySelector('.beams-container');
+        const targetElem = document.querySelector('.gradient-text-wrapper');
+
+        let width, height, beams = [], particles = [], relTarget = null;
+
+        function initCanvas() {
+            width = canvas.width = container.offsetWidth;
+            height = canvas.height = container.offsetHeight;
+            
+            // 預先計算碰撞區域，避免在 animate 中呼叫
+            const rect = targetElem.getBoundingClientRect();
+            const cRect = container.getBoundingClientRect();
+            relTarget = {
+                left: rect.left - cRect.left,
+                right: rect.right - cRect.left,
+                top: rect.top - cRect.top,
+                bottom: rect.bottom - cRect.top
+            };
+        }
+
+        class Beam {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -Math.random() * 500; // 隨機延遲掉落
+                this.speed = 3 + Math.random() * 4;
+                this.length = 60 + Math.random() * 120;
+                this.hit = false;
+            }
+            update() {
+                this.y += this.speed;
+                
+                // 修正後的碰撞偵測：只要進入文字 y 軸區間且 x 軸相符就觸發
+                if (!this.hit && relTarget && 
+                    this.x > relTarget.left && this.x < relTarget.right &&
+                    this.y > relTarget.top && this.y < relTarget.bottom) {
+                    createExplosion(this.x, this.y);
+                    this.hit = true; // 標記已碰撞，避免穿透時重複爆炸
+                    this.reset();
+                }
+                if (this.y > height + 200) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                // 增加顏色不透明度
+                const grad = ctx.createLinearGradient(0, this.y, 0, this.y - this.length);
+                grad.addColorStop(0, 'rgba(139, 92, 246, 0.8)');
+                grad.addColorStop(1, 'rgba(139, 92, 246, 0)');
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 2;
+                ctx.lineCap = "round";
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y - this.length);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function createExplosion(x, y) {
+            for (let i = 0; i < 8; i++) {
+                particles.push({
+                    x, y,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    life: 1,
+                    color: Math.random() > 0.5 ? '#ec4899' : '#a855f7'
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            beams.forEach(b => {
+                b.update();
+                b.draw();
+            });
+
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                p.life -= 0.025;
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.life;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        // 延遲初始化確保 DOM 已經完全渲染獲取正確座標
+        setTimeout(() => {
+            initCanvas();
+            for(let i=0; i<12; i++) beams.push(new Beam()); // 增加一點光束數量
+            animate();
+        }, 100);
     </script>
 </body>
 </html>
