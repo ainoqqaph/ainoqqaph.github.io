@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>劉翔維 Elias | 數據工程與 BI 分析師</title>
+    <title>劉翔維 Elias | 數據分析與資料庫工程師</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
@@ -19,9 +21,11 @@
             --border-color: #e2e8f0;
             --tag-bg: #eff6ff;
             --tag-border: #bfdbfe;
+            --pill-color: #2563eb;
+            --pill-text-active: #ffffff;
             
-            /* PillNav 高級導航變數 */
-            --base: #0f172a; /* 導航背景色 */
+            /* PillNav 變數 */
+            --base: #0f172a;
             --pill-bg: #ffffff;
             --hover-text: #ffffff;
             --nav-h: 46px;
@@ -33,12 +37,13 @@
             font-family: 'Inter', -apple-system, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
+            line-height: 1.8;
             margin: 0; padding: 0;
             overflow-x: hidden;
         }
 
         /* =========================================
-           高級 PillNav (GSAP 原生移植版)
+           PillNav 導航列
            ========================================= */
         .pill-nav-container {
             position: fixed;
@@ -98,7 +103,6 @@
             cursor: pointer;
         }
 
-        /* 藥丸背景圓形 (GSAP 計算用) */
         .hover-circle {
             position: absolute;
             left: 50%;
@@ -136,7 +140,6 @@
             text-transform: uppercase;
         }
 
-        /* 手機版適配導航 */
         @media (max-width: 640px) {
             .pill-logo { display: none; }
             .pill-nav-container { top: 1rem; width: 95%; justify-content: center; }
@@ -164,7 +167,7 @@
             z-index: 1;
         }
 
-        .beams-content { position: relative; z-index: 10; text-align: center; }
+        .beams-content { position: relative; z-index: 10; text-align: center; padding: 0 1rem; }
         h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #0f172a; }
         @media (max-width: 640px) { h1 { font-size: 2.2rem; } }
 
@@ -184,7 +187,7 @@
         }
 
         /* =========================================
-           內容區塊樣式 (量化內容優化)
+           內容區塊
            ========================================= */
         .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
         section { padding-top: 6rem; margin-bottom: 2rem; }
@@ -195,7 +198,6 @@
         
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
         .tag { display: inline-block; background: var(--tag-bg); color: var(--accent-primary); border: 1px solid var(--tag-border); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; margin: 0.3rem 0.3rem 0 0; font-weight: 600; }
         
         footer { text-align: center; padding: 4rem 1rem; color: var(--text-muted); font-size: 0.85rem; }
@@ -205,47 +207,13 @@
 
     <nav class="pill-nav-container">
         <div class="pill-nav">
-            <div class="pill-logo">
-                <span style="color: white; font-weight: 900; font-size: 1.1rem;">E</span>
-            </div>
+            <div class="pill-logo"><span style="color: white; font-weight: 900; font-size: 1.1rem;">E</span></div>
             <div class="pill-nav-items">
                 <ul class="pill-list">
-                    <li>
-                        <a href="#home" class="pill active" data-target="home">
-                            <span class="hover-circle"></span>
-                            <span class="label-stack">
-                                <span class="pill-label">Home</span>
-                                <span class="pill-label-hover">Home</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#about" class="pill" data-target="about">
-                            <span class="hover-circle"></span>
-                            <span class="label-stack">
-                                <span class="pill-label">About</span>
-                                <span class="pill-label-hover">About</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#skills" class="pill" data-target="skills">
-                            <span class="hover-circle"></span>
-                            <span class="label-stack">
-                                <span class="pill-label">Skills</span>
-                                <span class="pill-label-hover">Skills</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#projects" class="pill" data-target="projects">
-                            <span class="hover-circle"></span>
-                            <span class="label-stack">
-                                <span class="pill-label">Projects</span>
-                                <span class="pill-label-hover">Projects</span>
-                            </span>
-                        </a>
-                    </li>
+                    <li><a href="#home" class="pill" data-target="home"><span class="hover-circle"></span><span class="label-stack"><span class="pill-label">Home</span><span class="pill-label-hover">Home</span></span></a></li>
+                    <li><a href="#about" class="pill" data-target="about"><span class="hover-circle"></span><span class="label-stack"><span class="pill-label">About</span><span class="pill-label-hover">About</span></span></a></li>
+                    <li><a href="#skills" class="pill" data-target="skills"><span class="hover-circle"></span><span class="label-stack"><span class="pill-label">Skills</span><span class="pill-label-hover">Skills</span></span></a></li>
+                    <li><a href="#projects" class="pill" data-target="projects"><span class="hover-circle"></span><span class="label-stack"><span class="pill-label">Projects</span><span class="pill-label-hover">Projects</span></span></a></li>
                 </ul>
             </div>
         </div>
@@ -267,26 +235,15 @@
             <h2 class="section-title">關於我 (About Me)</h2>
             <div class="card">
                 <p>專注於資料庫架構設計與全方位 BI 解決方案。擅長運用 T-SQL 開發穩健的 ETL 管線，並透過數據視覺化轉化商業決策。</p>
-                <p><strong>澳洲 5 年跨國協作：</strong>在全英文環境下展現優異的獨立解決問題能力與環境適應性。</p>
-                <p><strong>軍官 5 年領導資歷：</strong>鍛鍊出極強的抗壓韌性與縝密的邏輯思維，擅長在壓力下精準執行任務。</p>
+                <p><strong>澳洲 5 年跨國協作：</strong>在全英文環境下獨立解決問題。</p>
+                <p><strong>軍官 5 年領導資歷：</strong>鍛鍊出極強抗壓韌性與縝密思維。</p>
             </div>
         </section>
 
         <section id="skills" class="reveal">
-            <h2 class="section-title">技術核心 (Technical Skills)</h2>
+            <h2 class="section-title">技術核心 (Skills)</h2>
             <div class="card">
-                <div style="margin-bottom: 1.5rem;">
-                    <strong>🔹 Database & ETL:</strong><br>
-                    <span class="tag">SQL Server</span><span class="tag">T-SQL Tuning (效能提升 60%)</span><span class="tag">SSIS / SSAS</span>
-                </div>
-                <div style="margin-bottom: 1.5rem;">
-                    <strong>🔹 BI & Visualization:</strong><br>
-                    <span class="tag">Power BI (Advanced DAX)</span><span class="tag">自動化報表 (節省 85% 工時)</span>
-                </div>
-                <div>
-                    <strong>🔹 Programming:</strong><br>
-                    <span class="tag">Python (Pandas)</span><span class="tag">JavaScript</span><span class="tag">HTML5/CSS3</span>
-                </div>
+                <span class="tag">SQL Server</span><span class="tag">T-SQL Tuning</span><span class="tag">Power BI</span><span class="tag">Python</span>
             </div>
         </section>
 
@@ -294,186 +251,130 @@
             <h2 class="section-title">專案成果 (Projects)</h2>
             <div class="card">
                 <h3>跨國關鍵字分析儀表板</h3>
-                <ul>
-                    <li><strong>技術：</strong>SQL Server, SSAS, Power BI (DAX)。</li>
-                    <li><strong>成果：</strong>整合各國數據，建立動態分析模型。</li>
-                    <li><strong>亮點：</strong>優化查詢邏輯，檢索效能提升2倍以上。</li>
-                </ul>
+                <p>優化查詢邏輯，檢索效能提升 2 倍以上，節省 85% 人工核對工時。</p>
             </div>
         </section>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Elias. Designed with Professional High-Fidelity Collision Beams.</p>
-    </footer>
+    <footer><p>&copy; 2026 Elias. Optimized Collision Beams UI.</p></footer>
 
     <script>
-        /* --- 1. 滾動浮現與卡片特效 (保持原樣，效能良好) --- */
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 80) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal(); // 初始化觸發
+        /* --- 1. PillNav 動畫 (GSAP) --- */
+        const pills = document.querySelectorAll('.pill');
+        pills.forEach((pill) => {
+            const circle = pill.querySelector('.hover-circle');
+            const label = pill.querySelector('.pill-label');
+            const hoverLabel = pill.querySelector('.pill-label-hover');
 
-        // 卡片滑鼠追蹤 (保持原樣)
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
+            // 幾何半徑算法
+            const w = pill.offsetWidth;
+            const h = pill.offsetHeight;
+            const R = ((w * w) / 4 + h * h) / (2 * h);
+            const D = Math.ceil(2 * R) + 2;
+            const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
+            const originY = D - delta;
+
+            gsap.set(circle, { width: D, height: D, bottom: -delta, xPercent: -50, scale: 0, transformOrigin: `50% ${originY}px` });
+
+            const tl = gsap.timeline({ paused: true });
+            tl.to(circle, { scale: 1, duration: 0.4, ease: "power2.out" }, 0)
+              .to(label, { y: -30, duration: 0.4, ease: "power2.out" }, 0)
+              .to(hoverLabel, { y: -30, duration: 0.4, ease: "power2.out" }, 0);
+
+            pill.addEventListener('mouseenter', () => tl.play());
+            pill.addEventListener('mouseleave', () => tl.reverse());
         });
 
-        /* --- 2. 亂碼解密 (保持原樣) --- */
-        const encryptedElem = document.querySelector('.encrypted-text');
-        const targetText = encryptedElem.getAttribute('data-value');
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*+><?";
-        let iteration = 0;
-        const interval = setInterval(() => {
-            encryptedElem.innerText = targetText.split("").map((letter, index) => {
-                if(letter === " ") return " ";
-                if(index < iteration) return targetText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-            }).join("");
-            if(iteration >= targetText.length) clearInterval(interval);
-            iteration += 1/3; // 放慢解密速度
-        }, 30);
-
-        /* --- 3. 碰撞光束核心 (除錯與碰撞優化) --- */
+        /* --- 2. 碰撞光束 (修正選取器) --- */
         const canvas = document.getElementById('beamsCanvas');
         const ctx = canvas.getContext('2d');
         const container = document.querySelector('.beams-container');
-        const targetTextWrapper = document.querySelector('.gradient-text-wrapper');
+        // 重要：這裡必須對應 HTML 的 .hit-target
+        const hitTarget = document.querySelector('.hit-target');
 
         let width, height, beams = [], particles = [], relTarget = null;
-
-        // 增加光束數量，讓碰撞更頻繁
         const beamCount = 12;
 
         function initCanvas() {
             width = canvas.width = container.offsetWidth;
             height = canvas.height = container.offsetHeight;
-            
-            // [優化] 預先獲取碰撞目標的座標，避免在 animate 中呼叫getBoundingClientRect
-            const rect = targetTextWrapper.getBoundingClientRect();
+            const rect = hitTarget.getBoundingClientRect();
             const cRect = container.getBoundingClientRect();
-            
-            // 計算相對容器的座標
-            relTarget = {
-                left: rect.left - cRect.left,
-                right: rect.right - cRect.left,
-                top: rect.top - cRect.top,
-                bottom: rect.bottom - cRect.top
-            };
+            relTarget = { left: rect.left - cRect.left, right: rect.right - cRect.left, top: rect.top - cRect.top, bottom: rect.bottom - cRect.top };
         }
+
         class Beam {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
-                this.y = -Math.random() * 500; // 隨機延遲掉落
-                this.speed = 3 + Math.random() * 4; // 稍微增加速度
-                this.length = 60 + Math.random() * 120;
-                // 使用更醒目的顏色 (紫色系渐变)
+                this.y = -Math.random() * 500;
+                this.speed = 3 + Math.random() * 4;
+                this.length = 80 + Math.random() * 40;
                 this.color = 'rgba(139, 92, 246, 0.6)';
             }
             update() {
                 this.y += this.speed;
-                
-                // [核心修正] 碰撞偵測逻辑
-                // 如果光束的底部（y）進入了文字區域的 y 軸區間
-                if (relTarget && 
-                    this.x > relTarget.left && this.x < relTarget.right &&
-                    this.y > relTarget.top && this.y < relTarget.bottom) {
-                    
-                    // 觸發爆炸粒子 (在文字上方生成)
+                // 碰撞檢測
+                if (relTarget && this.x > relTarget.left && this.x < relTarget.right && this.y > relTarget.top && this.y < relTarget.bottom) {
                     createExplosion(this.x, this.y);
-                    this.reset(); // 碰到文字立即重置
+                    this.reset();
                 }
-
-                // 超出畫布重置
-                if (this.y > height + this.length) this.reset();
+                if (this.y > height + 200) this.reset();
             }
             draw() {
                 ctx.save();
                 ctx.beginPath();
-                // 增加光束頭部的發光感
                 const grad = ctx.createLinearGradient(0, this.y, 0, this.y - this.length);
-                grad.addColorStop(0, 'rgba(139, 92, 246, 0.8)'); // 頭部不透明
-                grad.addColorStop(1, 'rgba(139, 92, 246, 0)');   // 尾部透明
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = 2;
-                ctx.lineCap = "round"; // 讓光束頭部呈現圓形
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x, this.y - this.length);
+                grad.addColorStop(0, 'rgba(139, 92, 246, 0.8)');
+                grad.addColorStop(1, 'transparent');
+                ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.lineCap = "round";
+                ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y - this.length);
                 ctx.stroke();
                 ctx.restore();
             }
         }
 
         function createExplosion(x, y) {
-            // 生成一組向四周散射的粒子
             for (let i = 0; i < 8; i++) {
-                particles.push({
-                    x: x,
-                    y: y,
-                    vx: (Math.random() - 0.5) * 6, // 散射速度
-                    vy: (Math.random() - 0.5) * 6,
-                    life: 1, // 初始生命值
-                    // 爆炸粒子使用粉色系 (#ec4899)，與文字風格一致
-                    color: '#ec4899'
-                });
+                particles.push({ x, y, vx: (Math.random()-0.5)*6, vy: (Math.random()-0.5)*6, life: 1, color: '#ec4899' });
             }
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            
-            // 更新與繪製光束
-            beams.forEach(b => {
-                b.update();
-                b.draw();
-            });
-
-            // 更新與繪製粒子
+            beams.forEach(b => { b.update(); b.draw(); });
             particles.forEach((p, i) => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.life -= 0.025; // 生命值遞減
-                
-                ctx.save();
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.life; // 生命值轉化為不透明度
-                ctx.beginPath();
-                // 將粒子改為小圓點，質感更好
-                ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-                
-                // 移除死亡粒子
+                p.x += p.vx; p.y += p.vy; p.life -= 0.025;
+                ctx.save(); ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill(); ctx.restore();
                 if (p.life <= 0) particles.splice(i, 1);
             });
-
             requestAnimationFrame(animate);
         }
 
+        /* --- 3. 亂碼與卡片交互 --- */
         window.addEventListener('resize', initCanvas);
+        const encrypted = document.querySelector('.encrypted-text');
+        const content = encrypted.getAttribute('data-value');
+        let iter = 0;
+        setInterval(() => {
+            encrypted.innerText = content.split("").map((l, i) => i < iter ? content[i] : "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random()*26)]).join("");
+            if(iter < content.length) iter += 1/3;
+        }, 30);
 
-        // 延遲初始化，確保在網頁字體與佈局完成後才計算座標
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            });
+        });
+
         setTimeout(() => {
             initCanvas();
             for(let i=0; i<beamCount; i++) beams.push(new Beam());
             animate();
+            document.querySelectorAll(".reveal").forEach(el => el.classList.add("active"));
         }, 100);
     </script>
 </body>
