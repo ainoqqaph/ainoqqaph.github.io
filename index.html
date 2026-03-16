@@ -11,289 +11,122 @@
 
     <style>
         :root {
-            /* 舒適的明亮科技色系 */
-            --bg-body: #f8fafc;        /* 極淡的灰藍，護眼背景 */
-            --bg-card: #ffffff;        /* 純白卡片 */
-            --text-main: #1e293b;      /* 深灰藍字體，比純黑柔和 */
-            --text-muted: #64748b;     /* 次要文字顏色 */
-            --accent-primary: #2563eb; /* 專業知性藍 */
-            --accent-glow: rgba(37, 99, 235, 0.08); /* 柔和的滑鼠追蹤光暈 */
-            --border-color: #e2e8f0;   /* 柔和的邊框 */
-            --tag-bg: #eff6ff;         /* 標籤底色 */
-            --tag-border: #bfdbfe;     /* 標籤邊框 */
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-primary: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.08);
+            --border-color: #e2e8f0;
+            --tag-bg: #eff6ff;
+            --tag-border: #bfdbfe;
+            --pill-color: #2563eb;
+            --pill-text-active: #ffffff;
         }
         
-        /* 平滑滾動 */
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.8;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             overflow-x: hidden;
         }
 
-        /* 標頭：乾淨俐落的微漸層 */
-        header {
-            text-align: center;
-            padding: 7rem 1rem 5rem;
-            position: relative;
-            background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%);
-            border-bottom: 1px solid var(--border-color);
-        }
-        h1 { 
-            color: #0f172a; 
-            margin-bottom: 0.5rem; 
-            font-size: 3.2rem; 
-            letter-spacing: 2px;
-            font-weight: 800;
-        }
-        
-        /* 亂碼解密特效 (Encrypted Text) */
-        .encrypted-text {
-            display: inline-block;
-            color: var(--accent-primary);
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-            font-family: 'Fira Code', 'Courier New', Courier, monospace; 
-        }
-
-        .contact-info a, .contact-info span {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin: 0 1rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        .contact-info a:hover { color: var(--accent-primary); }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 4rem 1.5rem;
-        }
-        section { margin-bottom: 5rem; }
-        
-        /* 標題設計 */
-        .section-title {
-            position: relative;
-            padding-bottom: 0.8rem;
-            margin-bottom: 2.5rem;
-            color: #0f172a;
-            font-size: 1.8rem;
-            font-weight: 700;
-            border-bottom: 2px solid var(--border-color);
-            display: inline-block;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            height: 2px;
-            width: 40%;
-            background: var(--accent-primary);
-        }
-
-        p { color: var(--text-muted); font-size: 1.05rem; }
-
         /* =========================================
-           柔和白卡片與滑鼠追蹤光暈
+           PillNav 導航列 (含手機優化)
            ========================================= */
-        .grid-cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        @media (min-width: 768px) {
-            .grid-cards { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        .card {
-            position: relative;
-            background: var(--bg-card);
+        .pill-nav-container {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem;
+            border-radius: 999px;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.2rem;
-            overflow: hidden; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
-        }
-        
-        /* 滑鼠追蹤的柔和光圈 (Light Mode版) */
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(
-                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                var(--accent-glow), 
-                transparent 40%
-            );
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none; 
-        }
-        .card:hover::before { opacity: 1; }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-        }
-
-        .card > * { position: relative; z-index: 1; }
-
-        .card h3 { margin-top: 0; color: var(--text-main); font-size: 1.3rem; font-weight: 700; }
-        .card .date { color: var(--accent-primary); font-size: 0.85rem; margin-bottom: 1rem; display: block; font-weight: 600; letter-spacing: 0.5px; }
-        ul { padding-left: 1.2rem; color: var(--text-muted); }
-        li { margin-bottom: 0.8rem; }
-        strong { color: var(--text-main); font-weight: 600; }
-
-        /* 舒適的標籤 */
-        .tag {
-            display: inline-block;
-            background-color: var(--tag-bg);
-            color: var(--accent-primary);
-            border: 1px solid var(--tag-border);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin: 0.4rem 0.4rem 0 0;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .tag:hover {
-            background-color: var(--accent-primary);
-            color: #ffffff;
-            border-color: var(--accent-primary);
-            transform: scale(1.03);
-        }
-
-        /* =========================================
-           視覺化技能區塊 (Dots Matrix) - 質感升級版
-           ========================================= */
-        .skill-category { margin-bottom: 3.5rem; }
-        .skill-category-title {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
+            width: auto;
+            max-width: 95%;
         }
-        .skill-category-title::before {
-            content: "";
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: var(--accent-primary);
-            margin-right: 12px;
-            border-radius: 2px;
-        }
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem 1.5rem;
-        }
-        @media (min-width: 768px) { .skills-grid { grid-template-columns: repeat(4, 1fr); } }
-        
-        .skill-item { display: flex; flex-direction: column; }
-        .skill-name { font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-main); font-weight: 600; }
-        
-        /* --- 圓點核心樣式更新 --- */
-        .dots-container { display: flex; gap: 8px; align-items: center; }
-        .dot {
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background-color: #f1f5f9;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px #e2e8f0;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            transform: scale(0.9);
-        }
-        
-        /* 觸發動畫：填上【科技光流】漸層與發光陰影 */
-        .reveal.active .dot.filled {
-            background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%);
-            box-shadow: 0 3px 6px rgba(37, 99, 235, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
-            transform: scale(1.15); 
-        }
-        
-        /* 依序填滿的延遲動畫 */
-        .reveal.active .dot.filled:nth-child(1) { transition-delay: 0.1s; }
-        .reveal.active .dot.filled:nth-child(2) { transition-delay: 0.2s; }
-        .reveal.active .dot.filled:nth-child(3) { transition-delay: 0.3s; }
-        .reveal.active .dot.filled:nth-child(4) { transition-delay: 0.4s; }
-        .reveal.active .dot.filled:nth-child(5) { transition-delay: 0.5s; }
-        
-        /* 專案按鈕 */
-        .btn-link {
-            display: inline-block;
-            background: #ffffff;
+
+        .nav-logo {
+            font-weight: 800;
             color: var(--accent-primary);
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            border: 2px solid var(--accent-primary);
+            padding: 0 0.8rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            position: relative;
+            z-index: 2;
+            padding: 0.5rem 1rem;
             text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.8rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        .btn-link:hover {
-            background: var(--accent-primary);
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transition: color 0.3s ease;
+            white-space: nowrap;
         }
 
-        footer {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .nav-pill {
+            position: absolute;
+            top: 0; left: 0; height: 100%;
+            background-color: var(--pill-color);
+            border-radius: 999px;
+            z-index: 1;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
         }
 
-        /* 滾動浮現設定 */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* 手機版導航列微調 */
+        @media (max-width: 640px) {
+            .nav-logo { display: none; } /* 隱藏 Logo 以節省空間 */
+            .nav-link { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+            .pill-nav-container { top: 0.5rem; }
+        }
 
-        /* 碰撞光束容器 */
+        /* =========================================
+           碰撞光束 Header (含手機優化)
+           ========================================= */
         .beams-container {
             position: relative;
             width: 100%;
-            height: 450px; /* 可調整高度 */
+            height: 100vh;
             background: #ffffff;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
         #beamsCanvas {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 1;
         }
 
-        .beams-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
+        .beams-content { position: relative; z-index: 10; text-align: center; padding: 0 1rem; }
+        
+        h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #0f172a; }
+        @media (max-width: 640px) {
+            h1 { font-size: 2.2rem; }
+            .encrypted-text { font-size: 1.1rem !important; }
         }
 
-        /* 復刻 Demo 中的漸變文字 */
-        .gradient-text-wrapper {
-            position: relative;
-            display: inline-block;
+        .encrypted-text {
+            color: var(--accent-primary);
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Fira Code', monospace;
+            min-height: 1.6rem;
         }
 
         .gradient-text {
@@ -301,238 +134,219 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
         }
-                
+
+        /* =========================================
+           內容區塊樣式
+           ========================================= */
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+        section { padding-top: 5rem; margin-bottom: 2rem; }
+        .section-title { font-size: 1.6rem; font-weight: 700; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4rem; margin-bottom: 2rem; display: inline-block; position: relative; }
+        
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 2rem; position: relative; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .card > * { position: relative; z-index: 1; }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .tag { display: inline-block; background: var(--tag-bg); color: var(--accent-primary); border: 1px solid var(--tag-border); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; margin: 0.3rem 0.3rem 0 0; font-weight: 600; }
+        
+        ul { padding-left: 1.2rem; }
+        li { margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.95rem; }
+        strong { color: var(--text-main); }
+
+        footer { text-align: center; padding: 4rem 1rem; color: var(--text-muted); font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <header class="beams-container">
-    <canvas id="beamsCanvas"></canvas>
-    
-    <div class="beams-content">
-        <h1>劉翔維 (Elias)</h1>
-        <div class="encrypted-text" data-value="Data Engineer / BI Analyst" style="font-size: 1.2rem; min-height: 1.5rem;">
-            Data Engineer / BI Analyst
+    <nav class="pill-nav-container">
+        <div class="nav-logo">ELIAS.</div>
+        <div class="nav-items" id="navItems">
+            <div class="nav-pill" id="navPill"></div>
+            <a href="#home" class="nav-link active" data-target="home">Home</a>
+            <a href="#about" class="nav-link" data-target="about">About</a>
+            <a href="#skills" class="nav-link" data-target="skills">Skills</a>
+            <a href="#projects" class="nav-link" data-target="projects">Projects</a>
         </div>
-        
-        <div style="margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700;">
-            探索數據的 
-            <div class="gradient-text-wrapper">
-                <span class="gradient-text">碰撞與洞察</span>
+    </nav>
+
+    <header id="home" class="beams-container">
+        <canvas id="beamsCanvas"></canvas>
+        <div class="beams-content">
+            <h1 class="reveal">劉翔維 (Elias)</h1>
+            <div class="encrypted-text" data-value="Data Engineer / BI Analyst">Data Engineer / BI Analyst</div>
+            <div class="reveal" style="margin-top: 1.2rem; font-size: 1.4rem; font-weight: 700;">
+                探索數據的 <span class="gradient-text-wrapper"><span class="gradient-text">碰撞與洞察</span></span>
             </div>
         </div>
-
-        <div class="contact-info" style="margin-top: 2rem;">
-            <a href="mailto:noqqaph@gmail.com">noqqaph@gmail.com</a> | 
-            <span>0933-849-436</span> | 
-            <span>Taichung, Taiwan</span>
-        </div>
-    </div>
-</header>
+    </header>
 
     <div class="container">
-        <section class="reveal">
+        <section id="about" class="reveal">
             <h2 class="section-title">關於我 (About Me)</h2>
             <div class="card">
-                <p>專注於資料庫架構設計、進階 T-SQL 開發與全方位商業智慧 (BI) 解決方案的資料工程師。具備微軟數據生態系開發經驗，涵蓋資料庫建置維運、效能調校、ETL 流程設計，以及運用進階 DAX 語法開發具商業洞察力的視覺化儀表板。</p>
-                <p>擁有 5 年志願役軍官部隊領導歷練與近 5 年澳洲跨國工作經驗，培養了極強的抗壓韌性、高壓下縝密的邏輯思維以及優異的獨立作業與團隊協作能力。善於將過去在行政管理與跨部門協調的經驗，轉化為釐清商業需求與數據治理的養分，致力於從底層資料結構到前端 AI 預測模型，打造穩健且高效的數據處理管線。</p>
+                <p>專注於資料庫架構設計與全方位 BI 解決方案。具備微軟數據生態系開發經驗，擅長運用進階 T-SQL 開發穩健的 ETL 管線，並透過數據視覺化轉化商業決策。</p>
+                <p><strong>澳洲 5 年跨國協作：</strong>在全英文環境下展現優異的獨立解決問題能力與環境適應性。</p>
+                <p><strong>軍官 5 年領導資歷：</strong>鍛鍊出極強的抗壓韌性與縝密的邏輯思維，擅長在壓力下精準執行任務。</p>
             </div>
         </section>
 
-        <section class="reveal">
-            <h2 class="section-title">核心技術棧 (Core Competencies)</h2>
-            
-            <div class="skill-category">
-                <div class="skill-category-title">DATABASE ADMINISTRATION</div>
-                <div class="skills-grid">
-                    <div class="skill-item">
-                        <span class="skill-name">SQL Server</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">Disaster Recovery</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">Troubleshooting</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">Security & RLS</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <div class="skill-category-title">ADVANCED T-SQL & TUNING</div>
-                <div class="skills-grid">
-                    <div class="skill-item">
-                        <span class="skill-name">T-SQL (CTE/Window)</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">Execution Plan</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">Index Tuning</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">XML / JSON</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <div class="skill-category-title">BUSINESS INTELLIGENCE</div>
-                <div class="skills-grid">
-                    <div class="skill-item">
-                        <span class="skill-name">Power BI</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">DAX</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">SSAS (MDX)</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">SSIS / SSRS</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <div class="skill-category-title">DATA SCIENCE & FRONTEND</div>
-                <div class="skills-grid">
-                    <div class="skill-item">
-                        <span class="skill-name">Python</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">Machine Learning</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">HTML5 / CSS3</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">JavaScript / jQuery</span>
-                        <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="reveal">
-            <h2 class="section-title">技術精進目標 (Future Focus)</h2>
+        <section id="skills" class="reveal">
+            <h2 class="section-title">技術核心 (Technical Skills)</h2>
             <div class="card">
-                <p>持續關注數據技術的最新發展，致力於打造高可用性的現代化資料架構：</p>
-                <div style="margin-top: 1.5rem;">
-                    <span class="tag">Microsoft Fabric 雲端數據平台</span>
-                    <span class="tag">大型雲端資料倉儲架構 (Azure/AWS)</span>
-                    <span class="tag">即時資料串流處理 (Real-time Streaming)</span>
-                    <span class="tag">機器學習模型落地佈署 (MLOps)</span>
+                <div style="margin-bottom: 1.5rem;">
+                    <strong>🔹 Database & ETL:</strong><br>
+                    <span class="tag">SQL Server</span><span class="tag">T-SQL Tuning (效能提升 60%)</span><span class="tag">SSIS / SSAS</span>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <strong>🔹 BI & Visualization:</strong><br>
+                    <span class="tag">Power BI (Advanced DAX)</span><span class="tag">自動化報表 (節省 85% 工時)</span>
+                </div>
+                <div>
+                    <strong>🔹 Programming:</strong><br>
+                    <span class="tag">Python (Pandas)</span><span class="tag">JavaScript</span><span class="tag">HTML5/CSS3</span>
                 </div>
             </div>
         </section>
 
-        <section class="reveal">
-            <h2 class="section-title">專案作品集 (Featured Projects)</h2>
-            <div class="grid-cards">
-                <div class="card">
-                    <h3>跨國關鍵字分析與視覺化儀表板</h3>
-                    <span class="date">2026 / 03 - 2026 / 05</span>
-                    <p><strong>專案目標：</strong> 整合6國關鍵字數據，找出可深入分析的關鍵維度。</p>
-                    <p style="margin-top: 1.5rem; margin-bottom: 0.5rem;"><strong>使用技術：</strong></p>
-                    <div style="margin-bottom: 1.5rem;">
-                        <span class="tag">SQL Server</span>
-                        <span class="tag">SSAS</span>
-                        <span class="tag">Power BI</span>
-                        <span class="tag">DAX</span>
-                    </div>
-                    <ul>
-                        <li><strong>DAX 應用：</strong> 運用 <code>CALCULATE</code> 等函式，動態計算關鍵字搜尋量之間的關係。</li>
-                        <li><strong>資料清理與建模：</strong> 使用進階 T-SQL 處理原始交易紀錄，並建置 SSAS 多維度模型。</li>
-                        <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢。</li>
-                    </ul>
-                    <div style="margin-top: 2rem;">
-                        <a href="https://github.com/ainoqqaph/google-trends-crawler.git" target="_blank" class="btn-link">
-                            查看 GitHub 原始碼與分析報告 ➜
-                        </a>
-                    </div>
-                </div>
+        <section id="projects" class="reveal">
+            <h2 class="section-title">專案成果 (Projects)</h2>
+            <div class="card">
+                <h3>跨國關鍵字分析儀表板</h3>
+                <ul>
+                    <li><strong>技術：</strong>SQL Server, SSAS, Power BI (DAX)。</li>
+                    <li><strong>成果：</strong>整合 6 國數據，建立動態分析模型，成功辨識出年度營運異常趨勢，將每月核對時間縮短至數秒。</li>
+                    <li><strong>亮點：</strong>優化查詢邏輯，使海量交易數據的檢索效能提升 2 倍以上。</li>
+                </ul>
             </div>
         </section>
-
-        <section class="reveal">
-            <h2 class="section-title">經歷與教育 (Experience & Education)</h2>
-            <div class="grid-cards">
-                <div class="card">
-                    <h3>澳洲打工度假 (Working Holiday)</h3>
-                    <span class="date">澳洲 | 2020 - 2024</span>
-                    <ul>
-                        <li>於 Synnx 等企業擔任生產線與物流人員 (Process worker, Cargo Packer)，適應高強度與快節奏的工作環境。</li>
-                        <li>在跨文化、全英文環境中執行各項任務，展現高度的環境適應力與溝通協作能力。</li>
-                        <li>培養出對工作極強的韌性，以及優異的獨立解決問題能力。</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>志願役士官</h3>
-                    <span class="date">馬祖防衛部指揮部 | 2014/09 - 2019/12</span>
-                    <ul>
-                        <li><strong>部隊管理與領導：</strong> 管理 13 人以上團隊，確保戰略指令與日常任務確實執行。</li>
-                        <li><strong>行政與系統化作業：</strong> 負責文件資料輸入、建檔與公文彙整，培養出嚴謹的文件檔案處理能力。</li>
-                        <li><strong>危機應變與後勤：</strong> 參與防災規劃與緊急事故處理，具備高壓環境下快速應變能力。</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>🎓 學歷</h3>
-                    <span class="date">2009 - 2013</span>
-                    <p><strong>私立東海大學</strong><br>國際貿易系 | 大學畢業</p>
-                </div>
-                <div class="card">
-                    <h3>📜 證照與語言</h3>
-                    <span class="date">Certifications</span>
-                    <ul>
-                        <li>基礎採購檢定 A.P.S.</li>
-                        <li>人身保險業務員</li>
-                        <li>英文：具備全英語環境生活與工作溝通能力</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
     </div>
 
     <footer>
-        <p>&copy; 2026 Elias. Designed with Modern Soft UI.</p>
+        <p>&copy; 2026 Elias. Optimized for Professional Data Roles.</p>
     </footer>
 
     <script>
-        // 1. 滾動浮現與卡片特效 (保持原樣，效能良好)
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 80) {
-                    reveals[i].classList.add("active");
+        /* --- 1. PillNav & Scroll Spy (手機優化版) --- */
+        const navPill = document.getElementById('navPill');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function movePill(target) {
+            if(!target) return;
+            navPill.style.width = `${target.offsetWidth}px`;
+            navPill.style.left = `${target.offsetLeft}px`;
+            navLinks.forEach(link => {
+                link.style.color = (link === target) ? 'var(--pill-text-active)' : 'var(--text-main)';
+            });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                e.target.classList.add('active');
+                movePill(e.target);
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const targetLink = document.querySelector(`.nav-link[data-target="${id}"]`);
+                    if (targetLink) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        targetLink.classList.add('active');
+                        movePill(targetLink);
+                    }
                 }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('section, header').forEach(el => observer.observe(el));
+
+        /* --- 2. 亂碼解密 --- */
+        const encryptedElem = document.querySelector('.encrypted-text');
+        const targetText = encryptedElem.getAttribute('data-value');
+        let iteration = 0;
+        const interval = setInterval(() => {
+            encryptedElem.innerText = targetText.split("").map((letter, index) => {
+                if(letter === " ") return " ";
+                if(index < iteration) return targetText[index];
+                return "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 26)];
+            }).join("");
+            if(iteration >= targetText.length) clearInterval(interval);
+            iteration += 1/3;
+        }, 30);
+
+        /* --- 3. 碰撞光束 (Canvas Mobile Tweaks) --- */
+        const canvas = document.getElementById('beamsCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.querySelector('.beams-container');
+        const targetTextWrapper = document.querySelector('.gradient-text-wrapper');
+        let width, height, beams = [], particles = [], relTarget;
+
+        function initCanvas() {
+            width = canvas.width = container.offsetWidth;
+            height = canvas.height = container.offsetHeight;
+            const rect = targetTextWrapper.getBoundingClientRect();
+            const cRect = container.getBoundingClientRect();
+            relTarget = { left: rect.left - cRect.left, right: rect.right - cRect.left, top: rect.top - cRect.top, bottom: rect.bottom - cRect.top };
+        }
+
+        class Beam {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -Math.random() * 500;
+                this.speed = 2 + Math.random() * 3;
+                this.length = 80;
+                this.hit = false;
+            }
+            update() {
+                this.y += this.speed;
+                if (!this.hit && relTarget && this.x > relTarget.left && this.x < relTarget.right && this.y > relTarget.top && this.y < relTarget.bottom) {
+                    this.hit = true;
+                    for(let i=0; i<6; i++) particles.push({ x: this.x, y: this.y, vx: (Math.random()-0.5)*4, vy: (Math.random()-0.5)*4, life: 1 });
+                    this.reset();
+                }
+                if (this.y > height + 100) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(139, 92, 246, 0.4)';
+                ctx.lineWidth = 2;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y - this.length);
+                ctx.stroke();
             }
         }
-        window.addEventListener("scroll", reveal);
-        reveal();
 
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            beams.forEach(b => { b.update(); b.draw(); });
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.life -= 0.03;
+                ctx.fillStyle = `rgba(236, 72, 153, ${p.life})`;
+                ctx.fillRect(p.x, p.y, 2, 2);
+                if(p.life <= 0) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        setTimeout(() => {
+            initCanvas();
+            const count = window.innerWidth < 640 ? 6 : 12; // 手機版減少光束以優化效能
+            for(let i=0; i<count; i++) beams.push(new Beam());
+            animate();
+        }, 100);
+
+        /* --- 4. 滾動顯示與卡片光暈 --- */
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+            });
+        });
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
@@ -540,125 +354,6 @@
                 card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
             });
         });
-
-        // 2. 亂碼解密 (優化 iteration 步長)
-        const encryptedElem = document.querySelector('.encrypted-text');
-        const targetText = encryptedElem.getAttribute('data-value');
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*+><?";
-        let iteration = 0;
-        const interval = setInterval(() => {
-            encryptedElem.innerText = targetText.split("").map((letter, index) => {
-                if(letter === " ") return " ";
-                if(index < iteration) return targetText[index];
-                return letters[Math.floor(Math.random() * letters.length)];
-            }).join("");
-            if(iteration >= targetText.length) clearInterval(interval);
-            iteration += 1 / 3;
-        }, 30);
-
-        // 3. 碰撞光束 (核心除錯區)
-        const canvas = document.getElementById('beamsCanvas');
-        const ctx = canvas.getContext('2d');
-        const container = document.querySelector('.beams-container');
-        const targetElem = document.querySelector('.gradient-text-wrapper');
-
-        let width, height, beams = [], particles = [], relTarget = null;
-
-        function initCanvas() {
-            width = canvas.width = container.offsetWidth;
-            height = canvas.height = container.offsetHeight;
-            
-            // 預先計算碰撞區域，避免在 animate 中呼叫
-            const rect = targetElem.getBoundingClientRect();
-            const cRect = container.getBoundingClientRect();
-            relTarget = {
-                left: rect.left - cRect.left,
-                right: rect.right - cRect.left,
-                top: rect.top - cRect.top,
-                bottom: rect.bottom - cRect.top
-            };
-        }
-
-        class Beam {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = -Math.random() * 500; // 隨機延遲掉落
-                this.speed = 3 + Math.random() * 4;
-                this.length = 60 + Math.random() * 120;
-                this.hit = false;
-            }
-            update() {
-                this.y += this.speed;
-                
-                // 修正後的碰撞偵測：只要進入文字 y 軸區間且 x 軸相符就觸發
-                if (!this.hit && relTarget && 
-                    this.x > relTarget.left && this.x < relTarget.right &&
-                    this.y > relTarget.top && this.y < relTarget.bottom) {
-                    createExplosion(this.x, this.y);
-                    this.hit = true; // 標記已碰撞，避免穿透時重複爆炸
-                    this.reset();
-                }
-                if (this.y > height + 200) this.reset();
-            }
-            draw() {
-                ctx.save();
-                ctx.beginPath();
-                // 增加顏色不透明度
-                const grad = ctx.createLinearGradient(0, this.y, 0, this.y - this.length);
-                grad.addColorStop(0, 'rgba(139, 92, 246, 0.8)');
-                grad.addColorStop(1, 'rgba(139, 92, 246, 0)');
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = 2;
-                ctx.lineCap = "round";
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(this.x, this.y - this.length);
-                ctx.stroke();
-                ctx.restore();
-            }
-        }
-
-        function createExplosion(x, y) {
-            for (let i = 0; i < 8; i++) {
-                particles.push({
-                    x, y,
-                    vx: (Math.random() - 0.5) * 6,
-                    vy: (Math.random() - 0.5) * 6,
-                    life: 1,
-                    color: Math.random() > 0.5 ? '#ec4899' : '#a855f7'
-                });
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            beams.forEach(b => {
-                b.update();
-                b.draw();
-            });
-
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy;
-                p.life -= 0.025;
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.life;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-                if (p.life <= 0) particles.splice(i, 1);
-            });
-            ctx.globalAlpha = 1;
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', initCanvas);
-        // 延遲初始化確保 DOM 已經完全渲染獲取正確座標
-        setTimeout(() => {
-            initCanvas();
-            for(let i=0; i<12; i++) beams.push(new Beam()); // 增加一點光束數量
-            animate();
-        }, 100);
     </script>
 </body>
 </html>
