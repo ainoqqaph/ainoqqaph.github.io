@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>劉翔維 Elias | 數據分析與資料庫工程師</title>
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&family=Noto+Sans+TC:wght@900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Noto+Sans+TC:wght@700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Noto+Sans+TC:wght@700;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             /* 基礎舒適色系 */
@@ -35,9 +40,6 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.8;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
             -webkit-user-select: none; 
             -moz-user-select: none;    
             -ms-user-select: none;     
@@ -45,14 +47,24 @@
             cursor: default;
         }
 
+        .container-custom { max-width: 1000px; }
+
         /* =========================================
-           浮動膠囊導航列
+           浮動膠囊導航列 (毛玻璃特效 + 滾動監聽)
            ========================================= */
         .pill-nav-container { position: fixed; top: 1.5em; left: 50%; transform: translateX(-50%); z-index: 1000; }
         @media (max-width: 768px) { .pill-nav-container { width: 100%; left: 0; transform: none; top: 1em; } }
-        .pill-nav { --base: #000000; --pill-bg: #ffffff; --pill-text: #000000; --hover-text: #ffffff; --nav-h: 46px; --pill-pad-x: 20px; --pill-gap: 4px; width: max-content; display: flex; align-items: center; box-sizing: border-box; margin: 0 auto; }
+        .pill-nav { --base: #000000; --pill-bg: transparent; --pill-text: #e2e8f0; --hover-text: #ffffff; --nav-h: 46px; --pill-pad-x: 20px; --pill-gap: 4px; width: max-content; display: flex; align-items: center; box-sizing: border-box; margin: 0 auto; }
         @media (max-width: 768px) { .pill-nav { width: 100%; justify-content: space-between; padding: 0 1.5rem; background: transparent; } }
-        .pill-nav-items { position: relative; display: flex; align-items: center; height: var(--nav-h); background: var(--base); border-radius: 9999px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
+        
+        .pill-nav-items { 
+            position: relative; display: flex; align-items: center; height: var(--nav-h); 
+            background: rgba(0, 0, 0, 0.75); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
+            border-radius: 9999px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        
         @keyframes spin-border { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
         .pill-logo { position: relative; width: var(--nav-h); height: var(--nav-h); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); text-decoration: none; overflow: hidden; background: var(--base); }
         .pill-logo::before { content: ''; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent 60%, #6366f1 80%, #ec4899 100%); transform-origin: center center; animation: spin-border 3s linear infinite; z-index: 1; }
@@ -61,24 +73,31 @@
         .pill-logo:hover .logo-inner { text-shadow: 0 0 8px rgba(236, 72, 153, 0.8); }
         .pill-list { list-style: none; display: flex; align-items: stretch; gap: var(--pill-gap); margin: 0; padding: 4px; height: 100%; box-sizing: border-box; }
         .pill-list > li { display: flex; height: 100%; }
-        .pill { display: inline-flex; align-items: center; justify-content: center; height: 100%; padding: 0 var(--pill-pad-x); background: var(--pill-bg); color: var(--pill-text); text-decoration: none; border-radius: 9999px; box-sizing: border-box; font-weight: 600; font-size: 0.9rem; line-height: 0; letter-spacing: 0.5px; white-space: nowrap; cursor: pointer; position: relative; overflow: hidden; transition: color 0.3s ease; }
-        .pill .hover-circle { position: absolute; left: 50%; bottom: 0; width: 0; height: 0; border-radius: 50%; background: var(--base); z-index: 1; display: block; pointer-events: none; transform: translate(-50%, 50%); transition: width 0.4s ease-out, height 0.4s ease-out; }
+        
+        .pill { display: inline-flex; align-items: center; justify-content: center; height: 100%; padding: 0 var(--pill-pad-x); color: var(--pill-text); text-decoration: none; border-radius: 9999px; box-sizing: border-box; font-weight: 600; font-size: 0.9rem; line-height: 0; letter-spacing: 0.5px; white-space: nowrap; cursor: pointer; position: relative; overflow: hidden; transition: color 0.3s ease, background 0.3s ease; }
+        .pill .hover-circle { position: absolute; left: 50%; bottom: 0; width: 0; height: 0; border-radius: 50%; background: rgba(255,255,255,0.15); z-index: 1; display: block; pointer-events: none; transform: translate(-50%, 50%); transition: width 0.4s ease-out, height 0.4s ease-out; }
         .pill:hover .hover-circle { width: 150px; height: 150px; }
         .pill .label-stack { position: relative; display: inline-block; line-height: 1; z-index: 2; }
         .pill .pill-label { position: relative; z-index: 2; display: inline-block; line-height: 1; transition: transform 0.3s ease, opacity 0.3s ease; }
         .pill .pill-label-hover { position: absolute; left: 0; top: 0; color: var(--hover-text); z-index: 3; display: inline-block; opacity: 0; transform: translateY(10px); transition: transform 0.3s ease, opacity 0.3s ease; }
         .pill:hover .pill-label { opacity: 0; transform: translateY(-10px); }
         .pill:hover .pill-label-hover { opacity: 1; transform: translateY(0); }
+        
+        .pill.active { background: rgba(255, 255, 255, 0.15); color: #ffffff; }
+        .pill.active .pill-label { opacity: 0; transform: translateY(-10px); }
+        .pill.active .pill-label-hover { opacity: 1; transform: translateY(0); }
+
         .desktop-only { display: block; } .mobile-only { display: none; }
         @media (max-width: 768px) { .desktop-only { display: none; } .mobile-only { display: block; } }
-        .mobile-menu-button { width: var(--nav-h); height: var(--nav-h); border-radius: 50%; background: var(--base); border: none; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; padding: 0; position: relative; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
+        
+        .mobile-menu-button { width: var(--nav-h); height: var(--nav-h); border-radius: 50%; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); display: none; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; padding: 0; position: relative; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); }
         @media (max-width: 768px) { .mobile-menu-button { display: flex; } }
-        .hamburger-line { width: 16px; height: 2px; background: var(--pill-bg); border-radius: 1px; transition: all 0.3s ease; transform-origin: center; }
+        .hamburger-line { width: 16px; height: 2px; background: #ffffff; border-radius: 1px; transition: all 0.3s ease; transform-origin: center; }
         .mobile-menu-popover { position: absolute; top: 4em; left: 1rem; right: 1rem; background: #ffffff; border-radius: 20px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12); z-index: 998; opacity: 0; transform: translateY(-10px); visibility: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         .mobile-menu-popover.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
         .mobile-menu-list { list-style: none; margin: 0; padding: 6px; display: flex; flex-direction: column; gap: 4px; }
-        .mobile-menu-popover .mobile-menu-link { display: block; padding: 14px 20px; color: var(--pill-text); background-color: var(--pill-bg); text-decoration: none; font-size: 1rem; font-weight: 600; border-radius: 16px; text-align: center; transition: all 0.2s ease; }
-        .mobile-menu-popover .mobile-menu-link:hover { cursor: pointer; background-color: var(--base); color: var(--hover-text); }
+        .mobile-menu-popover .mobile-menu-link { display: block; padding: 14px 20px; color: #1e293b; text-decoration: none; font-size: 1rem; font-weight: 600; border-radius: 16px; text-align: center; transition: all 0.2s ease; }
+        .mobile-menu-popover .mobile-menu-link:hover { cursor: pointer; background-color: #f1f5f9; color: var(--accent-primary); }
 
         /* =========================================
            標頭與解密特效
@@ -89,90 +108,40 @@
         .header-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; }
         .name-container { margin-bottom: 0.5rem; padding: 0 1rem; }
         h1 { color: #1e293b; font-family:'Montserrat', 'Noto Sans TC', sans-serif; font-size: 3.5rem; letter-spacing: -1px; font-weight: 800; margin: 0; padding: 0.5rem 0; }
-        .job-title-container { position: relative; display: inline-block; margin-bottom: 1.5rem; padding: 0; color: #334155; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; font-family: 'Fira Code', 'Courier New', Courier, monospace; }
-        .encrypted-text { display: inline-block; color: var(--accent-primary); font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 1px; font-family: 'Fira Code', 'Courier New', Courier, monospace; }
+        .job-title-container { position: relative; display: inline-block; margin-bottom: 1rem; padding: 0; color: #334155; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; font-family: 'Fira Code', 'Courier New', Courier, monospace; }
+        .encrypted-text { display: inline-block; color: var(--accent-primary); font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 1px; font-family: 'Fira Code', 'Courier New', Courier, monospace; }
         .contact-info a, .contact-info span { color: var(--text-muted); text-decoration: none; margin: 0 0.8rem; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
         .contact-info a:hover { color: var(--accent-primary); }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 4rem 1.5rem; }
         section { margin-bottom: 5.5rem; scroll-margin-top: 100px; }
         .section-title { position: relative; padding-bottom: 0.8rem; margin-bottom: 2.5rem; color: #0f172a; font-size: 1.8rem; font-weight: 700; border-bottom: 2px solid #e2e8f0; display: inline-block; }
         .section-title::after { content: ''; position: absolute; left: 0; bottom: -2px; height: 2px; width: 40%; background: var(--accent-primary); }
         p { color: var(--text-muted); font-size: 1.05rem; }
 
         /* =========================================
-           🌟 核心魔法：向下有機資料流樹狀圖 
-              (Vertical Data-Flow Organic Tree)
+           樹狀圖架構
            ========================================= */
-        .tree-wrapper {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 3rem 1.5rem 4rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            overflow-x: auto; 
-            scrollbar-width: thin;
-        }
-        /* 隱藏 tree-wrapper 的捲軸 (適用於 Chrome, Edge, Safari) */
-        .tree-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-        /* 針對 Firefox 隱藏捲軸 */
-        .tree-wrapper {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        .tree {
-            display: flex; justify-content: center;
-            width: 100%; margin: 0; padding: 0;
-            min-width: 1000px; /* 防止小螢幕破版 */
-        }
-        
-        .tree ul {
-            display: flex; justify-content: center; 
-            padding-top: 30px; position: relative;
-            margin: 0; padding-left: 0; list-style: none;
-            gap: 15px; 
-        }
+        .tree-wrapper { background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 3rem 1.5rem 4rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        .tree-wrapper::-webkit-scrollbar { display: none; }
+        .tree { display: flex; justify-content: center; width: 100%; margin: 0; padding: 0; min-width: 1000px; }
+        .tree ul { display: flex; justify-content: center; padding-top: 30px; position: relative; margin: 0; padding-left: 0; list-style: none; gap: 15px; }
         .tree li { position: relative; padding-top: 30px; text-align: center; }
         .tree > ul { padding-top: 0; }
         .tree > ul > li { padding-top: 0; }
 
-        /* --- 頂層連線：完美圓弧倒角 (拒絕直角) --- */
-        .tree ul ul::before {
-            content: ''; position: absolute; top: 0; left: 50%;
-            border-left: 2px solid var(--border-color);
-            width: 0; height: 30px; transform: translateX(-1px);
-        }
-        .tree ul ul li::before, .tree ul ul li::after {
-            content: ''; position: absolute; top: 0; right: 50%;
-            border-top: 2px solid var(--border-color);
-            width: 50%; height: 30px;
-        }
+        .tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid var(--border-color); width: 0; height: 30px; transform: translateX(-1px); }
+        .tree ul ul li::before, .tree ul ul li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid var(--border-color); width: 50%; height: 30px; }
         .tree ul ul li::after { right: auto; left: 50%; border-left: 2px solid var(--border-color); }
         .tree ul ul li:first-child::before, .tree ul ul li:last-child::after { border: 0 none; }
         .tree ul ul li:first-child::after { border-radius: 20px 0 0 0; } 
         .tree ul ul li:last-child::before { border-right: 2px solid var(--border-color); border-radius: 0 20px 0 0; }
 
-        /* --- PBI 節點卡片設定 --- */
-        .pbi-node {
-            background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; 
-            padding: 8px 12px; height: 64px; box-sizing: border-box;
-            display: inline-flex; justify-content: space-between; align-items: center;
-            position: relative; z-index: 2; cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: left; margin: 0 auto;
-            
-        }
+        .pbi-node { background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; height: 64px; box-sizing: border-box; display: inline-flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: left; margin: 0 auto; }
         .root-node { width: 240px; cursor: default; }
         .category-node { width: 210px; }
         .skill-node { width: 195px; height: auto; min-height: 56px; gap: 8px; } 
 
-        .pbi-node::before {
-            content: ''; position: absolute; left: -1px; top: -1px; bottom: -1px;
-            width: 5px; border-radius: 8px 0 0 8px; transition: background 0.3s;
-        }
+        .pbi-node::before { content: ''; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 5px; border-radius: 8px 0 0 8px; transition: background 0.3s; }
         .root-node::before { background: #334155; }
         .category-node::before { background: var(--border-color); }
         .skill-node::before { background: var(--border-color); }
@@ -181,116 +150,47 @@
         .node-label { font-size: 0.65rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         .node-value { font-size: 0.9rem; color: #0f172a; font-weight: 800; line-height: 1.2; word-wrap: break-word; white-space: normal; transition: color 0.3s; }
 
-        .expand-btn {
-            width: 22px; height: 22px; flex-shrink: 0; border: 1px solid var(--border-color); border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: bold; color: #64748b; background: #f8fafc;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); line-height: 0;
-        }
+        .expand-btn { width: 22px; height: 22px; flex-shrink: 0; border: 1px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: #64748b; background: #f8fafc; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); line-height: 0; }
 
-        /* --- 懸停互動控制區 (Hover Zone) --- */
-        .branch-interactive-zone {
-            width: 210px; margin: 0 auto;
-            display: flex; flex-direction: column; position: relative;
-        }
-        .branch-interactive-zone:hover .category-node {
-            border-color: var(--accent-primary); box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.2); transform: translateY(-2px) scale(1.02);
-        }
+        .branch-interactive-zone { width: 210px; margin: 0 auto; display: flex; flex-direction: column; position: relative; }
+        .branch-interactive-zone:hover .category-node { border-color: var(--accent-primary); box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.2); transform: translateY(-2px) scale(1.02); }
         .branch-interactive-zone:hover .category-node::before { background: var(--accent-primary); }
         .branch-interactive-zone:hover .category-node .node-value { color: var(--accent-primary); }
-        .branch-interactive-zone:hover .category-node .expand-btn {
-            background: var(--accent-primary); color: #fff; border-color: var(--accent-primary); transform: rotate(180deg);
-        }
+        .branch-interactive-zone:hover .category-node .expand-btn { background: var(--accent-primary); color: #fff; border-color: var(--accent-primary); transform: rotate(180deg); }
         .tree ul ul li:hover::before, .tree ul ul li:hover::after { border-color: var(--accent-primary); }
 
-        /* =========================================
-           ⭐️ 生長動畫核心：神經網絡資料流
-           ========================================= */
-        .skill-tree-container {
-            width: 100%; position: relative; 
-            padding-top: 15px; padding-bottom: 0px; /* 修正1：移除底部留白 */
-            display: flex; flex-direction: column; gap: 12px; /* 修正2：改用 gap 統一控制間距 */
-            
-            /* 預設隱藏容器 */
-            max-height: 0; opacity: 0; pointer-events: none; overflow: hidden;
-            transition: max-height 0.8s ease-out, opacity 0.3s ease;
-        }
-        
-        .branch-interactive-zone:hover .skill-tree-container {
-            max-height: 500px; opacity: 1; pointer-events: auto; overflow: visible;
-        }
+        .skill-tree-container { width: 100%; position: relative; padding-top: 15px; padding-bottom: 0px; display: flex; flex-direction: column; gap: 12px; max-height: 0; opacity: 0; pointer-events: none; overflow: hidden; transition: max-height 0.8s ease-out, opacity 0.3s ease; }
+        .branch-interactive-zone:hover .skill-tree-container { max-height: 500px; opacity: 1; pointer-events: auto; overflow: visible; }
 
-        /* 1. 主脊椎 (Spine) - 向下勻速生長 */
-        .spine {
-            position: absolute; top: 0; left: 9.9px; width: 1.7px;
-            background: var(--accent-primary);
-            height: 0; 
-            transition: height 0.8s linear; 
-        }
-        /* 修正3：完美的數學公式！總高度剛好扣除最後一張卡片一半的高度(28px) */
+        .spine { position: absolute; top: 0; left: 9.9px; width: 1.7px; background: var(--accent-primary); height: 0; transition: height 0.8s linear; }
         .branch-interactive-zone:hover .spine { height: calc(100% - 42px); }
 
-        /* 2. 技能卡片項目定位 */
-        .skill-item {
-            width: 195px; margin-left: 25px; margin-bottom: 0; /* 修正4：移除 margin，交給父層的 gap 控制 */
-            position: relative;
-        }
+        .skill-item { width: 195px; margin-left: 25px; margin-bottom: 0; position: relative; }
+        .skill-item::before { content: ''; position: absolute; top: 0; left: -15px; width: 15px; height: 50%; border-left: 2px solid var(--accent-primary); border-bottom: 2px solid var(--accent-primary); border-bottom-left-radius: 15px; clip-path: inset(0 100% 0 0); transition: clip-path 0.1s ease-out; }
 
-        /* 3. 圓弧線連接管 (Arc Connectors) - 橫向長出 */
-        .skill-item::before {
-            content: ''; position: absolute;
-            top: 0; left: -15px; width: 15px; height: 50%;
-            border-left: 2px solid var(--accent-primary);
-            border-bottom: 2px solid var(--accent-primary);
-            border-bottom-left-radius: 15px; 
-            
-            clip-path: inset(0 100% 0 0);
-            transition: clip-path 0.1s ease-out; 
-        }
+        .skill-item .skill-node { opacity: 0; transform: translateX(-10px); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .skill-item .dots-container { opacity: 0; transform: scale(0.8); transition: all 0.3s ease; }
 
-        /* 4. 卡片與點陣預設隱藏 */
-        .skill-item .skill-node {
-            opacity: 0; transform: translateX(-10px);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .skill-item .dots-container {
-            opacity: 0; transform: scale(0.8); transition: all 0.3s ease;
-        }
-
-        /* =========================================
-           ⭐️ 重頭戲：精準物理時間差 (Staggered Flow)
-           ========================================= */
-        
-        /* 第 1 個技能節點 (約 0.15s 脊椎到達) */
         .branch-interactive-zone:hover .skill-item:nth-child(2)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.15s; }
         .branch-interactive-zone:hover .skill-item:nth-child(2) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.2s; }
         .branch-interactive-zone:hover .skill-item:nth-child(2) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.3s; }
-
-        /* 第 2 個技能節點 (約 0.35s 脊椎到達) */
         .branch-interactive-zone:hover .skill-item:nth-child(3)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.35s; }
         .branch-interactive-zone:hover .skill-item:nth-child(3) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
         .branch-interactive-zone:hover .skill-item:nth-child(3) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.5s; }
-
-        /* 第 3 個技能節點 (約 0.55s 脊椎到達) */
         .branch-interactive-zone:hover .skill-item:nth-child(4)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.55s; }
         .branch-interactive-zone:hover .skill-item:nth-child(4) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.6s; }
         .branch-interactive-zone:hover .skill-item:nth-child(4) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.7s; }
-
-        /* 第 4 個技能節點 (約 0.75s 脊椎到達) */
         .branch-interactive-zone:hover .skill-item:nth-child(5)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.75s; }
         .branch-interactive-zone:hover .skill-item:nth-child(5) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.8s; }
         .branch-interactive-zone:hover .skill-item:nth-child(5) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.9s; }
 
-        /* Hover 時卡片微反饋 */
         .skill-node:hover { border-color: var(--accent-primary); box-shadow: 0 4px 8px -2px rgba(139, 92, 246, 0.15); transform: translateX(3px) !important; }
         .skill-node:hover::before { background: var(--gradient-filled-start); }
 
-        /* 圓點評分系統 */
         .dots-container { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background-color: #f1f5f9; box-shadow: inset 0 1px 2px rgba(0,0,0,0.08), 0 0 0 1px #e2e8f0; }
         .dot.filled { background: linear-gradient(135deg, var(--gradient-filled-start) 0%, var(--gradient-filled-end) 100%); box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3); }
 
-        /* 手機版排版修正 */
         @media (max-width: 768px) {
             .tree ul { flex-direction: column; align-items: center; gap: 20px; padding-top: 20px; }
             .tree ul ul::before, .tree ul ul li::before, .tree ul ul li::after { display: none; } 
@@ -298,35 +198,48 @@
         }
 
         /* =========================================
-           其餘區塊卡片保留
+           卡片與元件
            ========================================= */
-        .grid-cards { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 768px) { .grid-cards { grid-template-columns: repeat(2, 1fr); } }
-        .card { position: relative; background: var(--bg-card); border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.2rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); transition: transform 0.4s ease, box-shadow 0.4s ease; }
-        .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--accent-glow), transparent 40%); z-index: 0; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
-        .card:hover::before { opacity: 1; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02); border-color: var(--tag-border); }
-        .card > * { position: relative; z-index: 1; }
-        .card h3 { margin-top: 0; color: var(--text-main); font-size: 1.3rem; font-weight: 700; }
-        .card .date { color: var(--accent-primary); font-size: 0.85rem; margin-bottom: 1rem; display: block; font-weight: 600; letter-spacing: 0.5px; }
+        .custom-card { position: relative; background: var(--bg-card); border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.2rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); transition: transform 0.4s ease, box-shadow 0.4s ease; height: 100%; }
+        .custom-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--accent-glow), transparent 40%); z-index: 0; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
+        .custom-card:hover::before { opacity: 1; }
+        .custom-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02); border-color: var(--tag-border); }
+        .custom-card > * { position: relative; z-index: 1; }
+        .custom-card h3 { margin-top: 0; color: var(--text-main); font-size: 1.3rem; font-weight: 700; }
+        .custom-card .date { color: var(--accent-primary); font-size: 0.85rem; margin-bottom: 1rem; display: block; font-weight: 600; letter-spacing: 0.5px; }
         ul.list-style { padding-left: 1.2rem; color: var(--text-muted); margin-bottom: 0; }
         ul.list-style li { margin-bottom: 0.8rem; }
         strong { color: var(--text-main); font-weight: 600; }
 
-        .tag { display: inline-block; background-color: var(--tag-bg); color: var(--accent-primary); border: 1px solid var(--tag-border); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; margin: 0.4rem 0.4rem 0 0; font-weight: 600; transition: all 0.3s ease; }
-        .tag:hover { background-color: var(--accent-primary); color: #ffffff; border-color: var(--accent-primary); transform: scale(1.03); }
+        .custom-tag { display: inline-block; background-color: var(--tag-bg); color: var(--accent-primary); border: 1px solid var(--tag-border); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; margin: 0.4rem 0.4rem 0 0; font-weight: 600; transition: all 0.3s ease; }
+        .custom-tag:hover { background-color: var(--accent-primary); color: #ffffff; border-color: var(--accent-primary); transform: scale(1.03); text-decoration: none;}
         .indigo-tag { background-color: #e0e7ff !important; border: 1px solid #a5b4fc !important; color: #6366f1 !important; }
         .indigo-tag:hover { background-color: #6366f1 !important; color: #ffffff !important; border-color: #6366f1 !important; }
         .indigo-text { color: #6366f1 !important; }
-        .btn-link { display: inline-block; background: #ffffff; color: var(--accent-primary); padding: 0.6rem 1.2rem; border-radius: 6px; border: 2px solid var(--accent-primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.3s; }
-        .btn-link:hover { background: var(--accent-primary); color: #ffffff; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
+        .btn-link-custom { display: inline-block; background: #ffffff; color: var(--accent-primary); padding: 0.6rem 1.2rem; border-radius: 6px; border: 2px solid var(--accent-primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.3s; }
+        .btn-link-custom:hover { background: var(--accent-primary); color: #ffffff; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); text-decoration: none;}
         .indigo-btn { border-color: #6366f1 !important; color: #6366f1 !important; }
         .indigo-btn:hover { background: #6366f1 !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2) !important; }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        footer { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 0.9rem; }
+        /* 專案圖片懸停放大特效 */
+        .project-img-wrapper { border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+        .project-img { width: 100%; height: auto; max-height: 250px; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; }
+        .custom-card:hover .project-img { transform: scale(1.05); }
+
+        /* 毛玻璃回到頂部按鈕 */
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.3s ease; z-index: 999; text-decoration: none;
+        }
+        #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        #back-to-top:hover { background: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3); color:#fff; }
     </style>
 </head>
 <body>
@@ -367,24 +280,33 @@
             <div class="contact-info">
                 <a href="mailto:noqqaph@gmail.com">noqqaph@gmail.com</a> | <span>0933-849-436</span> | <span>Taichung, Taiwan</span>
             </div>
+            
+            <div class="mt-4 d-flex justify-content-center gap-3">
+                <a href="#projects" class="btn btn-dark rounded-pill px-4 py-2 fw-bold shadow-sm">
+                    <i class="fa-solid fa-laptop-code me-2"></i>查看專案
+                </a>
+                <a href="Elias_Resume.pdf" download="劉翔維_Elias_Resume.pdf" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold">
+                    <i class="fa-solid fa-file-pdf me-2"></i>下載履歷
+                </a>
+            </div>
         </div>
     </header>
 
-    <div class="container">
+    <main class="container container-custom py-5">
         
-        <section class="reveal" id="about">
+        <section class="reveal scroll-section" id="about">
             <h2 class="section-title">關於我 (About Me)</h2>
-            <div class="card">
+            <div class="custom-card">
                 <p>熟悉資料庫架構設計、 T-SQL 開發與全方位商業智慧 (BI) 解決方案的資料工程師。具備微軟數據生態系開發經驗，涵蓋資料庫建置維運、效能調校、ETL 流程設計，以及運用進階 DAX 語法開發具商業洞察力的視覺化儀表板。</p>
-                <p>擁有 5 年志願役軍官部隊領導歷練與近 5 年澳洲跨國工作經驗，培養了極強的抗壓韌性、高壓下縝密的邏輯思維以及優異的獨立作業與團隊協作能力。善於將過去在行政管理與跨部門協調的經驗，轉化為釐清商業需求與數據治理的養分，致力於從底層資料結構到前端 AI 預測模型，打造穩健且高效的數據處理管線。</p>
+                <p class="mb-0">擁有 5 年志願役軍官部隊領導歷練與近 5 年澳洲跨國工作經驗，培養了極強的抗壓韌性、高壓下縝密的邏輯思維以及優異的獨立作業與團隊協作能力。善於將過去在行政管理與跨部門協調的經驗，轉化為釐清商業需求與數據治理的養分，致力於從底層資料結構到前端 AI 預測模型，打造穩健且高效的數據處理管線。</p>
             </div>
         </section>
 
-        <section class="reveal" id="skills">
+        <section class="reveal scroll-section" id="skills">
             <h2 class="section-title">核心技術棧 (Core Competencies)</h2>
             
             <div class="tree-wrapper">
-                <div class="mobile-only" style="text-align:right; font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">
+                <div class="d-md-none text-end text-muted mb-2" style="font-size:0.8rem;">
                     滑動查看完整架構 ➔
                 </div>
                 
@@ -571,87 +493,106 @@
 
         <section class="reveal">
             <h2 class="section-title">技術精進目標 (Future Focus)</h2>
-            <div class="card">
+            <div class="custom-card">
                 <p>持續關注數據技術的最新發展，致力於打造高可用性的現代化資料架構：</p>
-                <div style="margin-top: 1.5rem;">
-                    <span class="tag indigo-tag">Microsoft Fabric 雲端數據平台</span>
-                    <span class="tag indigo-tag">大型雲端資料倉儲架構 (Azure/AWS)</span>
-                    <span class="tag indigo-tag">即時資料串流處理 (Real-time Streaming)</span>
-                    <span class="tag indigo-tag">AI 驅動的數據分析與預測模型</span>
+                <div class="mt-4">
+                    <span class="custom-tag indigo-tag">Microsoft Fabric 雲端數據平台</span>
+                    <span class="custom-tag indigo-tag">大型雲端資料倉儲架構 (Azure/AWS)</span>
+                    <span class="custom-tag indigo-tag">即時資料串流處理 (Real-time Streaming)</span>
+                    <span class="custom-tag indigo-tag">AI 驅動的數據分析與預測模型</span>
                 </div>
             </div>
         </section>
 
-        <section class="reveal" id="projects">
+        <section class="reveal scroll-section" id="projects">
             <h2 class="section-title">專案作品集 (Featured Projects)</h2>
-            <div class="grid-cards">
-                <div class="card">
-                    <h3>跨國關鍵字分析與視覺化儀表板</h3>
-                    <span class="date indigo-text">2026 / 03 - 2026 / 05</span>
-                    <p><strong>專案目標：</strong> 整合6國關鍵字數據，找出可深入分析的關鍵維度。</p>
-                    <p style="margin-top: 1.5rem; margin-bottom: 0.5rem;"><strong>使用技術：</strong></p>
-                    <div style="margin-bottom: 1.5rem;">
-                        <span class="tag indigo-tag">SQL Server</span>
-                        <span class="tag indigo-tag">SSAS</span>
-                        <span class="tag indigo-tag">Power BI</span>
-                        <span class="tag indigo-tag">DAX</span>
-                    </div>
-                    <ul class="list-style">
-                        <li><strong>資料清理與建模：</strong> 使用 T-SQL 處理原始爬蟲紀錄，並建置 SSAS 多維度模型。</li>
-                        <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢。</li>
-                    </ul>
-                    <div style="margin-top: 2rem;">
-                        <a href="https://github.com/ainoqqaph/google-trends-crawler.git" target="_blank" class="btn-link indigo-btn">
-                            查看 GitHub 原始碼與分析報告 ➜
-                        </a>
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <div class="custom-card">
+                        <h3>跨國關鍵字分析與視覺化儀表板</h3>
+                        <span class="date indigo-text">2026 / 03 - 2026 / 05</span>
+                        
+                        <div class="project-img-wrapper">
+                            <img src="https://via.placeholder.com/600x300/f8fafc/64748b?text=Power+BI+Dashboard+Preview" alt="Power BI Dashboard" class="project-img">
+                        </div>
+
+                        <p><strong>專案目標：</strong> 整合6國關鍵字數據，找出可深入分析的關鍵維度。</p>
+                        <p class="mt-4 mb-2"><strong>使用技術：</strong></p>
+                        <div class="mb-4">
+                            <span class="custom-tag indigo-tag">SQL Server</span>
+                            <span class="custom-tag indigo-tag">SSAS</span>
+                            <span class="custom-tag indigo-tag">Power BI</span>
+                            <span class="custom-tag indigo-tag">DAX</span>
+                        </div>
+                        <ul class="list-style mb-4">
+                            <li><strong>資料清理與建模：</strong> 使用 T-SQL 處理原始爬蟲紀錄，並建置 SSAS 多維度模型。</li>
+                            <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢。</li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://github.com/ainoqqaph/google-trends-crawler.git" target="_blank" class="btn-link-custom indigo-btn">
+                                查看 GitHub 原始碼與分析報告 ➜
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="reveal" id="experience">
+        <section class="reveal scroll-section" id="experience">
             <h2 class="section-title">經歷與教育 (Experience & Education)</h2>
-            <div class="grid-cards">
-                <div class="card">
-                    <h3>🦘 澳洲打工度假 (Working Holiday)</h3>
-                    <span class="date indigo-text">澳洲 | 2020 - 2024</span>
-                    <ul class="list-style">
-                        <li>於 Synnex 等企業擔任生產線與物流人員 (Process worker, Cargo Packer)，適應高強度與快節奏的工作環境。</li>
-                        <li>在跨文化、全英文環境中執行各項任務，展現高度的環境適應力與溝通協作能力。</li>
-                        <li>培養出對工作極強的韌性，以及優異的獨立解決問題能力。</li>
-                    </ul>
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <div class="custom-card">
+                        <h3><i class="fa-solid fa-earth-oceania me-2"></i> 澳洲打工度假 (Working Holiday)</h3>
+                        <span class="date indigo-text">澳洲 | 2020 - 2024</span>
+                        <ul class="list-style">
+                            <li>於 Synnex 等企業擔任生產線與物流人員 (Process worker, Cargo Packer)，適應高強度與快節奏的工作環境。</li>
+                            <li>在跨文化、全英文環境中執行各項任務，展現高度的環境適應力與溝通協作能力。</li>
+                            <li>培養出對工作極強的韌性，以及優異的獨立解決問題能力。</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>🪖 志願役士官</h3>
-                    <span class="date indigo-text">馬祖防衛部指揮部 | 2014/09 - 2019/12</span>
-                    <ul class="list-style">
-                        <li><strong>部隊管理與領導：</strong> 管理 13 人以上團隊，確保戰略指令與日常任務確實執行。</li>
-                        <li><strong>危機應變與後勤：</strong> 參與防災規劃與緊急事故處理，具備高壓環境下快速應變能力。</li>
-                    </ul>
+                <div class="col-12 col-md-6">
+                    <div class="custom-card">
+                        <h3><i class="fa-solid fa-medal me-2"></i> 志願役士官</h3>
+                        <span class="date indigo-text">馬祖防衛部指揮部 | 2014/09 - 2019/12</span>
+                        <ul class="list-style">
+                            <li><strong>部隊管理與領導：</strong> 管理 13 人以上團隊，確保戰略指令與日常任務確實執行。</li>
+                            <li><strong>危機應變與後勤：</strong> 參與防災規劃與緊急事故處理，具備高壓環境下快速應變能力。</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>📖 學歷</h3>
-                    <span class="date indigo-text">2009 - 2013</span>
-                    <p><strong>私立東海大學</strong><br>國際貿易系 | 大學畢業</p>
+                <div class="col-12 col-md-6">
+                    <div class="custom-card">
+                        <h3><i class="fa-solid fa-graduation-cap me-2"></i> 學歷</h3>
+                        <span class="date indigo-text">2009 - 2013</span>
+                        <p class="mb-0"><strong>私立東海大學</strong><br>國際貿易系 | 大學畢業</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>📜 證照與語言</h3>
-                    <span class="date indigo-text">Certifications</span>
-                    <ul class="list-style">
-                        <li>基礎採購檢定 A.P.S.</li>
-                        <li>人身保險業務員</li>
-                        <li>英文：具備全英語環境生活與工作溝通能力</li>
-                    </ul>
+                <div class="col-12 col-md-6">
+                    <div class="custom-card">
+                        <h3><i class="fa-solid fa-certificate me-2"></i> 證照與語言</h3>
+                        <span class="date indigo-text">Certifications</span>
+                        <ul class="list-style">
+                            <li>基礎採購檢定 A.P.S.</li>
+                            <li>人身保險業務員</li>
+                            <li>英文：具備全英語環境生活與工作溝通能力</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
-    </div>
+    </main>
 
-    <footer>
-        <p>&copy; 2026 Elias. Designed with Perfect Arc Connections & Precise Interaction Zones.</p>
+    <footer class="text-center py-5 text-muted">
+        <p class="mb-0">&copy; 2026 Elias. Designed with Perfect Arc Connections & Precise Interaction Zones.</p>
     </footer>
 
+    <a href="#" id="back-to-top" title="回到頂部"><i class="fa-solid fa-arrow-up"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
         // 漢堡選單
         const mobileToggle = document.getElementById('mobile-toggle');
@@ -687,7 +628,6 @@
                 const rect = targetText.getBoundingClientRect();
                 const headerRect = document.querySelector('header').getBoundingClientRect();
                 collisionTargetRect = { x: rect.left, 
-                    // 👇 在這裡加上 + 15 (數字越大，爆炸位置越低) 👇
                     y: rect.top - headerRect.top + 15, 
                     width: rect.width, 
                     height: rect.height };
@@ -797,7 +737,7 @@
         if (headerSection) headerObserver.observe(headerSection);
 
         // 卡片滑鼠追蹤
-        document.querySelectorAll('.card').forEach(card => {
+        document.querySelectorAll('.custom-card').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
                 card.style.setProperty('--mouse-x', `${x}px`); card.style.setProperty('--mouse-y', `${y}px`);
@@ -812,6 +752,42 @@
             });
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Scroll Spy (滾動監聽)
+        const sections = document.querySelectorAll('.scroll-section');
+        const navLinks = document.querySelectorAll('.pill-list .pill');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Back to Top 按鈕
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
