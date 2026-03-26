@@ -123,7 +123,7 @@
            ========================================= */
         .tree-wrapper { background: #ffffff; border: 1px solid var(--border-color); border-radius: 16px; padding: 3rem 1.5rem 4rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
         .tree-wrapper::-webkit-scrollbar { display: none; }
-        .tree { display: flex; justify-content: center; width: 100%; margin: 0; padding: 0; min-width: 1000px; }
+        .tree { display: flex; justify-content: flex-start; width: 100%; margin: 0; padding: 0; min-width: 1000px; }
         .tree ul { display: flex; justify-content: center; padding-top: 30px; position: relative; margin: 0; padding-left: 0; list-style: none; gap: 15px; }
         .tree li { position: relative; padding-top: 30px; text-align: center; }
         .tree > ul { padding-top: 0; }
@@ -162,7 +162,7 @@
         .skill-tree-container { width: 100%; position: relative; padding-top: 15px; padding-bottom: 0px; display: flex; flex-direction: column; gap: 12px; max-height: 0; opacity: 0; pointer-events: none; overflow: hidden; transition: max-height 0.8s ease-out, opacity 0.3s ease; }
         .branch-interactive-zone:hover .skill-tree-container { max-height: 500px; opacity: 1; pointer-events: auto; overflow: visible; }
 
-        .spine { position: absolute; top: 0; left: -0.1px; width: 1.7px; background: var(--accent-primary); height: 0; transition: height 0.8s linear; }
+        .spine { position: absolute; top: 0; left: -0px; width: 1.7px; background: var(--accent-primary); height: 0; transition: height 0.8s linear; }
         .branch-interactive-zone:hover .spine { height: calc(100% - 42px); }
 
         .skill-item { width: 195px; margin-left: 10px; margin-bottom: 0; position: relative; }
