@@ -351,13 +351,13 @@
                                             <div class="skill-item">
                                                 <div class="pbi-node skill-node">
                                                     <div class="node-content"><span class="node-label">Skill</span><span class="node-value">Troubleshooting</span></div>
-                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
                                                 </div>
                                             </div>
                                             <div class="skill-item">
                                                 <div class="pbi-node skill-node">
                                                     <div class="node-content"><span class="node-label">Skill</span><span class="node-value">Security & RLS</span></div>
-                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -385,7 +385,7 @@
                                             <div class="skill-item">
                                                 <div class="pbi-node skill-node">
                                                     <div class="node-content"><span class="node-label">Skill</span><span class="node-value">Execution Plan</span></div>
-                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
                                                 </div>
                                             </div>
                                             <div class="skill-item">
@@ -471,12 +471,6 @@
                                             <div class="skill-item">
                                                 <div class="pbi-node skill-node">
                                                     <div class="node-content"><span class="node-label">Skill</span><span class="node-value">HTML5 / CSS3</span></div>
-                                                    <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                                                </div>
-                                            </div>
-                                            <div class="skill-item">
-                                                <div class="pbi-node skill-node">
-                                                    <div class="node-content"><span class="node-label">Skill</span><span class="node-value">JS / jQuery</span></div>
                                                     <div class="dots-container"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
                                                 </div>
                                             </div>
@@ -507,30 +501,35 @@
         <section class="reveal scroll-section" id="projects">
             <h2 class="section-title">專案作品集 (Featured Projects)</h2>
             <div class="row g-4">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6"> 
                     <div class="custom-card">
-                        <h3>跨國關鍵字分析與視覺化儀表板</h3>
-                        <span class="date indigo-text">2026 / 03 - 2026 / 05</span>
+                        <h3>全自動化跨國市場情報與 AI 戰情儀表板</h3>
+                        <span class="date indigo-text">2024 / 03 - 迄今</span>
                         
                         <div class="project-img-wrapper">
-                            <img src="https://via.placeholder.com/600x300/f8fafc/64748b?text=Power+BI+Dashboard+Preview" alt="Power BI Dashboard" class="project-img">
+                            <img src="images/powerbiscreenshot.png" alt="Power BI AI 戰情儀表板" class="project-img">
                         </div>
 
-                        <p><strong>專案目標：</strong> 整合6國關鍵字數據，找出可深入分析的關鍵維度。</p>
+                        <p><strong>專案目標：</strong> 打造從底層資料抓取、AI 語意分析、資料庫清洗，到前端視覺化的「端到端 (End-to-End)」全自動數據決策系統，實現跨國市場商機的零時差洞察。</p>
+                        
                         <p class="mt-4 mb-2"><strong>使用技術：</strong></p>
                         <div class="mb-4">
+                            <span class="custom-tag indigo-tag">Python (Selenium)</span>
+                            <span class="custom-tag indigo-tag">Docker & Airflow</span>
                             <span class="custom-tag indigo-tag">SQL Server</span>
-                            <span class="custom-tag indigo-tag">SSAS</span>
-                            <span class="custom-tag indigo-tag">Power BI</span>
-                            <span class="custom-tag indigo-tag">DAX</span>
+                            <span class="custom-tag indigo-tag">Google Gemini API</span>
+                            <span class="custom-tag indigo-tag">Power BI & DAX</span>
                         </div>
+                        
                         <ul class="list-style mb-4">
-                            <li><strong>資料清理與建模：</strong> 使用 T-SQL 處理原始爬蟲紀錄，並建置 SSAS 多維度模型。</li>
-                            <li><strong>互動式視覺化：</strong> 設計決策導向的 Power BI 報表，協助管理層快速辨識異常趨勢。</li>
+                            <li><strong>高容錯自動化爬蟲：</strong> 於 Linux Docker 環境建置極輕量化 Headless Chrome 爬蟲。導入「崩潰自動重啟機制」與防鎖死 (Deadlock) 寫入邏輯，並透過 <strong>Apache Airflow</strong> 部署每日定時 DAG 排程。</li>
+                            <li><strong>AI 賦能數據治理：</strong> 串接 Gemini API，自動將生硬的 Google Trends 關鍵字賦予「商業意圖 (Search Intent)」與「產業分類」，將非結構化資料轉化為高含金量的商業指標。</li>
+                            <li><strong>進階 BI 視覺化建模：</strong> 遵循星狀結構 (Star Schema) 建置資料庫。運用進階 DAX 語法 (如 <code>CROSSFILTER</code> 短暫開啟雙向關聯)，完美整合四象限散佈圖、神經網絡圖與 AI 戰情快報，打造 C-Level 決策儀表板。</li>
                         </ul>
+                        
                         <div class="mt-auto">
-                            <a href="https://github.com/ainoqqaph/google-trends-crawler.git" target="_blank" class="btn-link-custom indigo-btn">
-                                查看 GitHub 原始碼與分析報告 ➜
+                            <a href="https://github.com/ainoqqaph/你的專案名稱" target="_blank" class="btn-link-custom indigo-btn">
+                                <i class="fa-brands fa-github me-2"></i>查看 GitHub 原始碼與架構 ➜
                             </a>
                         </div>
                     </div>
