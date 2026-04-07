@@ -162,7 +162,7 @@
         .skill-tree-container { width: 100%; position: relative; padding-top: 15px; padding-bottom: 0px; display: flex; flex-direction: column; gap: 12px; max-height: 0; opacity: 0; pointer-events: none; overflow: hidden; transition: max-height 0.8s ease-out, opacity 0.3s ease; }
         .branch-interactive-zone:hover .skill-tree-container { max-height: 500px; opacity: 1; pointer-events: auto; overflow: visible; }
 
-        .spine { position: absolute; top: 0; left: -0px; width: 1.7px; background: var(--accent-primary); height: 0; transition: height 0.8s linear; }
+        .spine { position: absolute; top: 0; left: 0.5px; width: 1.7px; background: var(--accent-primary); height: 0; transition: height 0.8s linear; }
         .branch-interactive-zone:hover .spine { height: calc(100% - 42px); }
 
         .skill-item { width: 195px; margin-left: 10px; margin-bottom: 0; position: relative; }
@@ -177,10 +177,10 @@
         .branch-interactive-zone:hover .skill-item:nth-child(3)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.55s; }
         .branch-interactive-zone:hover .skill-item:nth-child(3) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
         .branch-interactive-zone:hover .skill-item:nth-child(3) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.5s; }
-        .branch-interactive-zone:hover .skill-item:nth-child(4)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.7s; }
+        .branch-interactive-zone:hover .skill-item:nth-child(4)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.73s; }
         .branch-interactive-zone:hover .skill-item:nth-child(4) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.6s; }
         .branch-interactive-zone:hover .skill-item:nth-child(4) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.7s; }
-        .branch-interactive-zone:hover .skill-item:nth-child(5)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.9s; }
+        .branch-interactive-zone:hover .skill-item:nth-child(5)::before { clip-path: inset(0 0 0 0); transition: clip-path 0.2s ease-out 0.85s; }
         .branch-interactive-zone:hover .skill-item:nth-child(5) .skill-node { opacity: 1; transform: translateX(0); transition-delay: 0.8s; }
         .branch-interactive-zone:hover .skill-item:nth-child(5) .dots-container { opacity: 1; transform: scale(1); transition-delay: 0.9s; }
 
@@ -224,10 +224,24 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* 專案圖片懸停放大特效 */
+        /* 專案圖片與放大游標 */
         .project-img-wrapper { border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
-        .project-img { width: 100%; height: auto; max-height: 250px; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; }
+        .project-img { width: 100%; height: auto; max-height: 250px; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); display: block; cursor: zoom-in; }
         .custom-card:hover .project-img { transform: scale(1.05); }
+
+        /* =========================================
+           圖片放大遮罩 (Lightbox)
+           ========================================= */
+        .lightbox-overlay {
+            display: none; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .lightbox-overlay.show { display: flex; opacity: 1; }
+        .lightbox-img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.3s ease; object-fit: contain; }
+        .lightbox-overlay.show .lightbox-img { transform: scale(1); }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; z-index: 1051; line-height: 1; }
+        .lightbox-close:hover { color: var(--accent-primary); }
 
         /* 毛玻璃回到頂部按鈕 */
         #back-to-top {
@@ -537,8 +551,13 @@
                         <h3>自動化跨國情報與 AI 戰情儀表板</h3>
                         <span class="date indigo-text">2025 / 12 - 迄今</span>
                         
-                        <div class="project-img-wrapper">
-                            <img src="img/powerbiscreenshot.png" alt="Power BI AI 戰情儀表板" class="project-img">
+                        <!-- 替換為互動載入容器 -->
+                        <div class="project-img-wrapper" id="powerbi-container" style="position: relative; padding-bottom: 62.25%; height: 0; overflow: hidden; cursor: pointer; border-radius: 8px;">
+                            <img src="img/powerbiscreenshot.png" alt="Power BI AI 戰情儀表板" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" class="project-img">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: background 0.3s;" onmouseover="this.style.background='rgba(0, 0, 0, 0.4)'" onmouseout="this.style.background='rgba(0, 0, 0, 0.6)'">
+                                <i class="fa-solid fa-play" style="color: white; font-size: 3rem; margin-bottom: 10px;"></i>
+                                <span style="color: white; font-size: 1.2rem; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">點擊載入互動式儀表板</span>
+                            </div>
                         </div>
 
                         <p><strong>專案目標：</strong> 打造從底層資料抓取、AI 語意分析、資料庫清洗，到前端視覺化的「端到端 (End-to-End)」全自動數據決策系統。</p>
@@ -614,6 +633,12 @@
         </section>
 
     </main>
+
+    <!-- 圖片放大遮罩 (Lightbox) -->
+    <div id="image-lightbox" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-img" id="lightbox-img-content">
+    </div>
 
     <footer class="text-center py-5 text-muted">
         <p class="mb-0">&copy; 2026 Elias. Designed with Perfect Arc Connections & Precise Interaction Zones.</p>
@@ -817,6 +842,50 @@
         backToTopBtn.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Power BI 互動優化 (Lazy Loading)
+        const pbiContainer = document.getElementById('powerbi-container');
+        if (pbiContainer) {
+            pbiContainer.addEventListener('click', function(e) {
+                // 如果點擊目標已經是替換後的 iframe，不再重複觸發
+                if(e.target.tagName.toLowerCase() === 'iframe') return;
+
+                this.innerHTML = `
+                    <iframe 
+                        title="Keyword" 
+                        src="https://app.powerbi.com/view?r=eyJrIjoiMDE2ZWE3ZjQtZjdjMy00YTM2LWE4OTAtNTQxN2FkNjBiZGRlIiwidCI6ImUzNjNkNDdkLWQyYTktNGJmZC1hZmEyLWUwNzY1YzI4MTkzMyJ9" 
+                        frameborder="0" 
+                        allowFullScreen="true"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    </iframe>
+                `;
+                this.style.cursor = 'default';
+            }, { once: true });
+        }
+
+        // 圖片點擊放大 (Lightbox)
+        const lightbox = document.getElementById('image-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img-content');
+        const imagesToEnlarge = document.querySelectorAll('.project-img');
+
+        imagesToEnlarge.forEach(img => {
+            img.addEventListener('click', function(e) {
+                // 排除已被設定為 Power BI 互動容器的圖片（交由上述 Lazy Loading 處理）
+                if(this.closest('#powerbi-container')) return;
+                
+                lightbox.style.display = "flex";
+                setTimeout(() => lightbox.classList.add('show'), 10);
+                lightboxImg.src = this.src;
+            });
+        });
+
+        // 點擊關閉遮罩
+        lightbox.addEventListener('click', function(e) {
+            if (e.target !== lightboxImg) { 
+                lightbox.classList.remove('show');
+                setTimeout(() => lightbox.style.display = "none", 300);
+            }
         });
     </script>
 </body>
