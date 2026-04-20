@@ -49,6 +49,7 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.8;
+            overflow-x: hidden;
             -webkit-user-select: none; 
             -moz-user-select: none;    
             -ms-user-select: none;     
@@ -111,7 +112,7 @@
         /* =========================================
            標頭與解密特效
            ========================================= */
-        header { text-align: center; padding: 10rem 1rem 6rem; position: relative; background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%); border-bottom: 1px solid var(--border-color); overflow: hidden; }
+        header { text-align: center; padding: 10rem 1rem 6rem; position: relative; background: linear-gradient(180deg, #ffffff 0%, var(--bg-body) 100%); border-bottom: 1px solid var(--border-color); overflow: visible; }
         #beams-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         #collision-target-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
         .header-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; }
@@ -304,16 +305,44 @@
                 <a href="mailto:noqqaph@gmail.com">noqqaph@gmail.com</a> | <span>0933-849-436</span> | <span>Taichung, Taiwan</span>
             </div>
             
-            <div class="mt-4 d-flex justify-content-center gap-3">
+            <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
                 <a href="#projects" class="btn btn-dark rounded-pill px-4 py-2 fw-bold shadow-sm">
                     <i class="fa-solid fa-laptop-code me-2"></i>查看專案
                 </a>
                 <a href="Elias_Resume.pdf" download="Elias_Resume.pdf" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold">
                     <i class="fa-solid fa-file-pdf me-2"></i>下載履歷
                 </a>
-                <a href="跨國關鍵字自動化分析.pdf" download="Elias_Portfolio.pdf" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold">
-                    <i class="fa-solid fa-folder-open me-2"></i>下載作品集
-                </a>
+                
+                <div class="dropdown" style="position: relative; z-index: 1050;">
+                    <button class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+                        <i class="fa-solid fa-folder-open me-2"></i>作品集
+                    </button>
+                    <ul class="dropdown-menu shadow-sm border-0 mt-2 dropdown-menu-end" style="border-radius: 12px; min-width: 240px; position: absolute; top: 100%; bottom: auto;">
+                        <li><h6 class="dropdown-header text-uppercase opacity-50">數據工程與技術</h6></li>
+                        <li>
+                            <a class="dropdown-item fw-bold py-2" href="跨國關鍵字自動化分析.pdf" download>
+                                <i class="fa-solid fa-robot me-2" style="color: #6366f1;"></i>Keyword戰情化作品集
+                            </a>
+                        </li>
+                        
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li><h6 class="dropdown-header text-uppercase opacity-50">專題研究與分析</h6></li>
+                        <li>
+                            <a class="dropdown-item fw-bold py-2" href="能源轉型與電網韌性.pdf" download>
+                                <i class="fa-solid fa-bolt me-2" style="color: #f59e0b;"></i>能源轉型與電網韌性分析
+                            </a>
+                        </li>
+                        
+                        <li><hr class="dropdown-divider"></li>
+                        
+                        <li>
+                            <a class="dropdown-item py-2" href="https://github.com/ainoqqaph" target="_blank" style="font-size: 0.9rem;">
+                                <i class="fa-brands fa-github me-2"></i>前往 GitHub 程式庫
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
@@ -596,7 +625,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-6"> 
+                    <div class="custom-card">
+                        <h3>能源轉型 - 電網韌性專題</h3>
+                        <span class="date indigo-text">專題簡報</span>
+                        
+                        <div class="project-img-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                            <iframe 
+                                src="https://embed.figma.com/deck/bqXzzBLSzlk7OouhJNAYp7/%E8%83%BD%E6%BA%90%E8%BD%89%E5%9E%8B-%E9%9F%8C%E6%80%A7%E5%B0%88%E9%A1%8C?node-id=3-416&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share" 
+                                allowfullscreen 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 1px solid rgba(0, 0, 0, 0.1);">
+                            </iframe>
+                        </div>
+
+                        <p><strong>專案目標：</strong> 探討AI產業對科學園區的用電需求與電網韌性影響</p>
+                        
+                        <p class="mt-4 mb-2"><strong>使用技術：</strong></p>
+                        <div class="mb-4">
+                            <span class="custom-tag indigo-tag">Figma</span>
+                            <span class="custom-tag indigo-tag">資料視覺化</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+
         </section>
 
         <section class="reveal scroll-section" id="experience">
